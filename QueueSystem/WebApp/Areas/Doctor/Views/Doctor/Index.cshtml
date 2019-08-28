@@ -1,16 +1,44 @@
-﻿
+﻿@model  WebApp.Models.Queue
 @{
     ViewData["Title"] = "System Kolejkowy";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <br />
 
-<div class="border backgroundWhite container">
+<div class="backgroundWhite">
     <div class="row">
         <div class="col-6">
             <h2 class="text-info">Kolejka</h2>
         </div>
     </div>
 
+    <form method="post">
+        <div class="border-top border-dark">
+            <br />
+            <div class="row">
+                <div class="col-2 offset-1 text-nowrap">
+                    <a class="text-secondary">Obecny pacjent:</a>
+                    <a class="text-left text-dark font-weight-bold">@Html.DisplayFor(m => m.QueueNoMessage)</a>
+
+                </div>
+                <div class="col-1">
+                    <a class="btn btn-dark form-control text-light">Back</a>
+                </div>
+                <div class="col-1">
+                    
+                    <input type="submit" class="btn btn-dark text-light form-control" asp-action="Next" value="Next" />
+                    
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4 offset-1">
+                    <a class="text-secondary">Nadpisz numer:</a>
+                    <input class="text-dark border-dark" />
+                </div>
+            </div>
+        </div>
+    </form>
+    
 
 </div>
