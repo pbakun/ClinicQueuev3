@@ -35,9 +35,10 @@ namespace WebApp.Areas.Doctor.Controllers
             
             if (ModelState.IsValid)
             {
-                var bla = _queueDb.Queue.FirstOrDefault();
+                Queue bla = _queueDb.Queue.FirstOrDefault();
                 bla.QueueNo = 3;
                 bla.OwnerInitials = "PB";
+                bla.RoomNo = 12;
                 _queueDb.Queue.Update(bla);
                 await _queueDb.SaveChangesAsync();
 

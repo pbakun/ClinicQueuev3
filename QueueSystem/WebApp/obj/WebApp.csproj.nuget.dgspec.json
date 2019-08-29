@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj": {}
+    "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj": {}
   },
   "projects": {
-    "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj": {
+    "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
+        "projectUniqueName": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
         "projectName": "WebApp",
-        "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
+        "projectPath": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
         "packagesPath": "C:\\Users\\pbakun\\.nuget\\packages\\",
-        "outputPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\obj\\",
+        "outputPath": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -54,6 +54,10 @@
               "target": "Package",
               "version": "[2.2.0, )"
             },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[2.2.6, )"
+            },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
               "target": "Package",
@@ -63,6 +67,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[2.2.3, )"
+            },
+            "sqlite-net-pcl": {
+              "target": "Package",
+              "version": "[1.5.231, )"
             }
           },
           "imports": [

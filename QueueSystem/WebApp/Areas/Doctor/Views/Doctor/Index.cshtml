@@ -1,4 +1,4 @@
-﻿@model  WebApp.Models.Queue
+﻿@model WebApp.Models.Queue
 @{
     ViewData["Title"] = "System Kolejkowy";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -25,9 +25,9 @@
                     <a class="btn btn-dark form-control text-light">Back</a>
                 </div>
                 <div class="col-1">
-                    
+
                     <input type="submit" class="btn btn-dark text-light form-control" asp-action="Next" value="Next" />
-                    
+
                 </div>
             </div>
 
@@ -39,6 +39,9 @@
             </div>
         </div>
     </form>
-    
+
 
 </div>
+
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>

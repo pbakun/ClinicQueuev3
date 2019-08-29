@@ -29,3 +29,7 @@ C:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\WebApp.csproj.Co
 C:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Doctor\Views\Doctor\Index.g.cshtml.cs
 C:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Main\Views\Home\Index.g.cshtml.cs
 C:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Main\Views\Home\Privacy.g.cshtml.cs
+c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Doctor\Views\_ViewImports.g.cshtml.cs
+c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Doctor\Views\_ViewStart.g.cshtml.cs
+c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Main\Views\_ViewImports.g.cshtml.cs
+c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Main\Views\_ViewStart.g.cshtml.cs
