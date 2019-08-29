@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebApp.Data;
 
 namespace WebApp
 {
@@ -17,6 +18,8 @@ namespace WebApp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            
         }
 
         public IConfiguration Configuration { get; }
@@ -29,8 +32,11 @@ namespace WebApp
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+
             });
 
+            //adding SQLite to app
+            services.AddEntityFrameworkSqlite().AddDbContext<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -47,6 +53,13 @@ namespace WebApp
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+            }
+
+            //create DB on startup
+            using (var db = new ApplicationDbContext())
+            {
+                db.Database.EnsureCreated();
+                
             }
 
             app.UseHttpsRedirection();
