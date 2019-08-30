@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+
 using WebApp.Data;
 using WebApp.Models;
+
 
 namespace WebApp.Areas.Patient.Controllers
 {
     [Area("Patient")]
     public class PatientController : Controller
     {
+
         private readonly ApplicationDbContext _queueDb;
 
         public PatientController(ApplicationDbContext queueDb)
@@ -27,6 +30,7 @@ namespace WebApp.Areas.Patient.Controllers
             Queue queue = _queueDb.Queue.Where(m => m.RoomNo == roomNoInt).FirstOrDefault();
 
             return View(queue);
+
         }
     }
 }
