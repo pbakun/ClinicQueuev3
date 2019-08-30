@@ -12,13 +12,15 @@
         </div>
     </div>
 
+    <div class="text-hide" id="RoomNo">@Model.RoomNo</div>
+
     <form method="post">
         <div class="border-top border-dark">
             <br />
             <div class="row">
                 <div class="col-2 offset-1 text-nowrap">
                     <a class="text-secondary">Obecny pacjent:</a>
-                    <a class="text-left text-dark font-weight-bold">@Html.DisplayFor(m => m.QueueNoMessage)</a>
+                    <a class="text-left text-dark font-weight-bold" id="QueueNo">@Html.DisplayFor(m => m.QueueNoMessage)</a>
 
                 </div>
                 <div class="col-1">
@@ -43,5 +45,12 @@
 
 </div>
 
+
+<script type="text/javascript">
+    var roomNo = parseInt('@Model.RoomNo');
+    var queueNo = parseInt('@Model.QueueNo');
+    var id = parseInt('@Model.Id');
+</script>
+
 <script src="~/lib/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/queueService.js"></script>
+<script src="~/js/queueServiceMaster.js"></script>

@@ -24,6 +24,7 @@ namespace WebApp.Areas.Doctor.Controllers
             var queue = new Queue();
             queue.QueueNo = 15;
             queue.OwnerInitials = "AB";
+            queue.RoomNo = 12;
 
             return View(queue);
         }

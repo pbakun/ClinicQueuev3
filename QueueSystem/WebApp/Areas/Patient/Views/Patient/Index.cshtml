@@ -14,7 +14,7 @@
             <div class="text-info text-center font-weight-bolder" style="font-size: 300%;">Lek. med. Aleksandra Kowal</div>
         </div>
         <div class="container">
-            <div class="text-dark text-center font-weight-light" style="font-size: 500%">@Model.QueueNoMessage</div>
+            <div class="text-dark text-center font-weight-light" style="font-size: 500%" id="QueueNo">@Model.QueueNoMessage</div>
 
         </div>
     </div>
@@ -24,3 +24,5 @@
     </div>
 </div>
 
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/queueServiceSlave.js"></script>

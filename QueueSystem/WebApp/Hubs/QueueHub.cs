@@ -8,7 +8,7 @@ namespace WebApp.Hubs
 {
     public class QueueHub : Hub
     {
-        public List<HubUser> ConnectedUsers { get; set; }
+        private List<HubUser> ConnectedUsers;
         public async Task Register(int userId, int roomNo)
         {
             var newUser = new HubUser {
@@ -20,15 +20,31 @@ namespace WebApp.Hubs
             ConnectedUsers.Add(newUser);
         }
 
-        public async Task NewQueueNo(int userId, int queueNo)
-        {
-            foreach(var user in ConnectedUsers)
+        public async Task RegisterPatientView(int roomNo)
+        {   //todo
+            var newUser = new HubUser
             {
-                await Clients.Client(ConnectedUsers.Where(m => m.Id == userId).Select(s => s.ConnectionId).FirstOrDefault()).
-                    SendAsync("ReceiveQueueNo", userId, queueNo);
-            }
+                ConnectionId = Context.ConnectionId,
+                Client = Clients.Caller
+            };
+            if(!ConnectedUsers.Contains(newUser))
+                ConnectedUsers.Add(newUser);
 
-            //ConnectedUsers.Where(m => m.Id == userId).ToList();
+        }
+
+        public async Task NewQueueNo(int userId, int queueNo, int roomNo)
+        {
+
+            //Console.WriteLine(roomNo.ToString());
+            //foreach (var user in ConnectedUsers)
+            //{
+            //    await Clients.Client(ConnectedUsers.Where(m => m.Id == userId).Select(s => s.ConnectionId).FirstOrDefault()).
+            //        SendAsync("ReceiveQueueNo", userId, queueNo);
+            //}
+
+            //ConnectedUsers.Where(m => m.Id == userId).ToList().ForEach(u =>
+            //    Clients.Client(u.ConnectionId).SendAsync("ReceiveQueueNo", userId, queueNo)
+            //);
             //await Clients.All.SendAsync("ReceiveQueueNo", userId, queueNo);
         }
     }
