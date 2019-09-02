@@ -3,21 +3,33 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.Data;
 
 namespace WebApp.Hubs
 {
     public class QueueHub : Hub
     {
-        private List<HubUser> ConnectedUsers;
-        public async Task Register(int userId, int roomNo)
+        private static List<HubUser> _connectedUsers = new List<HubUser>();
+
+        private readonly ApplicationDbContext _queueDb;
+
+        public QueueHub(ApplicationDbContext queueDb)
+        {
+            _queueDb = queueDb;
+        }
+        public async Task RegisterDoctor(int userId, int roomNo)
         {
             var newUser = new HubUser {
                 Id = userId,
                 ConnectionId = Context.ConnectionId,
-                Client = Clients.Caller
+                GroupName = roomNo.ToString()
             };
 
-            ConnectedUsers.Add(newUser);
+            await Groups.AddToGroupAsync(newUser.ConnectionId, newUser.GroupName);
+
+            //what is unique for each user (take care about refreshing)!
+            if (!_connectedUsers.Contains(newUser))
+                _connectedUsers.Add(newUser);
         }
 
         public async Task RegisterPatientView(int roomNo)
@@ -25,27 +37,34 @@ namespace WebApp.Hubs
             var newUser = new HubUser
             {
                 ConnectionId = Context.ConnectionId,
-                Client = Clients.Caller
+                GroupName = roomNo.ToString()
             };
-            if(!ConnectedUsers.Contains(newUser))
-                ConnectedUsers.Add(newUser);
 
+            await Groups.AddToGroupAsync(newUser.ConnectionId, newUser.GroupName);
+
+            //what is unique for each user (take care about refreshing)!
+            if(!_connectedUsers.Contains(newUser))
+                _connectedUsers.Add(newUser);
+
+        }
+
+        public override Task OnDisconnectedAsync(Exception exception)
+        {
+            string connectionString = Context.ConnectionId;
+            var groupMember = _connectedUsers.Where(c => c.ConnectionId == Context.ConnectionId).FirstOrDefault();
+            _connectedUsers.Remove(groupMember);
+            Groups.RemoveFromGroupAsync(connectionString, groupMember.GroupName);
+
+            return base.OnDisconnectedAsync(exception);
         }
 
         public async Task NewQueueNo(int userId, int queueNo, int roomNo)
         {
+            var queue = _queueDb.Queue.Where(i => i.UserId == userId).FirstOrDefault();
+            queue.QueueNo = queueNo;
+            await _queueDb.SaveChangesAsync();
 
-            //Console.WriteLine(roomNo.ToString());
-            //foreach (var user in ConnectedUsers)
-            //{
-            //    await Clients.Client(ConnectedUsers.Where(m => m.Id == userId).Select(s => s.ConnectionId).FirstOrDefault()).
-            //        SendAsync("ReceiveQueueNo", userId, queueNo);
-            //}
-
-            //ConnectedUsers.Where(m => m.Id == userId).ToList().ForEach(u =>
-            //    Clients.Client(u.ConnectionId).SendAsync("ReceiveQueueNo", userId, queueNo)
-            //);
-            //await Clients.All.SendAsync("ReceiveQueueNo", userId, queueNo);
+            await Clients.Group(roomNo.ToString()).SendAsync("ReceiveQueueNo", userId, queue.QueueNoMessage);
         }
     }
 
@@ -54,5 +73,7 @@ namespace WebApp.Hubs
         public int Id { get; set; }
         public string ConnectionId { get; set; }
         public IClientProxy Client { get; set; }
+
+        public string GroupName { get; set; }
     }
 }

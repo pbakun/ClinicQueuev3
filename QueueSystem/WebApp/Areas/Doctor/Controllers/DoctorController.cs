@@ -21,10 +21,8 @@ namespace WebApp.Areas.Doctor.Controllers
 
         public IActionResult Index()
         {
-            var queue = new Queue();
-            queue.QueueNo = 15;
-            queue.OwnerInitials = "AB";
-            queue.RoomNo = 12;
+            var queue = _queueDb.Queue.Where(i => i.UserId == 1).FirstOrDefault();
+            
 
             return View(queue);
         }
@@ -40,6 +38,7 @@ namespace WebApp.Areas.Doctor.Controllers
                 bla.QueueNo = 3;
                 bla.OwnerInitials = "PB";
                 bla.RoomNo = 12;
+                bla.UserId = 1;
                 _queueDb.Queue.Update(bla);
                 await _queueDb.SaveChangesAsync();
 
