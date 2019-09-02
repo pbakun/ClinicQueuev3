@@ -24,10 +24,17 @@ namespace WebApp.Areas.Patient.Controllers
         [Route("patient/{roomNo}")]
         public IActionResult Index(string roomNo)
         {
-            int roomNoInt = Convert.ToInt32(roomNo);
+
+           int roomNoInt = Convert.ToInt32(roomNo);
 
             //todo: what in case of few queue with the same room?
             Queue queue = _queueDb.Queue.Where(m => m.RoomNo == roomNoInt).FirstOrDefault();
+            if(queue == null)
+            {
+                queue = new Queue();
+                queue.RoomNo = roomNoInt;
+
+            }
 
             return View(queue);
 

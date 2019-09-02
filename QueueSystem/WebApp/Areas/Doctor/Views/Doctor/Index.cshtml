@@ -18,52 +18,55 @@
         <div class="border-top border-dark">
             <br />
             <div class="row">
-                <div class="col-2 offset-1 text-nowrap">
-                    <a class="text-secondary">Obecny pacjent:</a>
-                    <a class="text-left text-dark font-weight-bold" id="QueueNo">@Html.DisplayFor(m => m.QueueNoMessage)</a>
+                <div class="col-lg-2 col-md-3 offset-1 text-nowrap">
+                    <label for="QueueNo">Obecny pacjent:</label>
+                    <a class="text-left text-dark font-weight-bold form-inline" style="font-size:25px;" id="QueueNo">@Html.DisplayFor(m => m.QueueNoMessage)</a>
 
                 </div>
-                <div class="col-1">
-                    <a class="btn btn-dark form-control text-light" id="PrevNo">Back</a>
-                </div>
-                <div class="col-1">
-                    <a class="btn btn-dark form-control text-light" id="NextNo">Next</a>
-                </div>
+                <div class="col-lg-3 col-sm-4">
+                    <br />
+                    <a class="btn btn-dark text-light" id="PrevNo">Back</a>
 
-                <div class="col-1">
+                    <a class="btn btn-dark text-light" id="NextNo">Next</a>
+
                     <a class="btn btn-info" id="Break">Break</a>
+
                 </div>
 
             </div>
-
+            <br />
             <div class="row">
-                <div class="col-4 offset-1">
-                        <a class="text-secondary">Nadpisz numer:</a>
-                        <input type="text" class="text-dark border-dark" id="NewQueueNoInputBox"  />
-                        <a class="btn btn-success" id="NewQueueNoSubmit">New</a>
+                <div class="col-lg-2 col-sm-3 offset-1">
+                    <label for="NewQueueNoInputBox">Nadpisz numer:</label>
+                    <input type="number" class="text-dark text-left form-control" id="NewQueueNoInputBox" />
+                    
+                </div>
+                <div class="col-lg-1 col-sm-2">
+                    <br />
+                    <a class="btn btn-success" style="margin: 5px;" id="NewQueueNoSubmit">New</a>
                 </div>
             </div>
             <br />
             <br />
 
             <div class="row">
-                <div class="form-group col-6">
+                <div class="form-group col-6 offset-1">
                     <label for="additionalInfo">Dodatkowa informacja:</label>
                     <textarea class="form-control" id="additionalInfo" rows="3">@Model.AdditionalMessage</textarea>
-                    
+
                 </div>
                 <div class="row">
                     <div class="col-1">
                         <br />
-                        <a class="btn btn-secondary" style="margin: 5px;" id="SendAdditionalMessage">Wyślij</a>
-                        
-                        <a class="btn btn-danger" style="margin: 5px;" id="ClearAdditionalMessage">Wyczyść</a>
+                        <a class="btn btn-dark text-light" style="margin: 5px;" id="SendAdditionalMessage">Wyślij</a>
+
+                        <a class="btn btn-info" style="margin: 5px;" id="ClearAdditionalMessage">Wyczyść</a>
                     </div>
                 </div>
 
-                        
-                </div>
+
             </div>
+        </div>
     </form>
 
 
@@ -77,7 +80,7 @@
     var id = parseInt('@Model.Id');
 
     //if enter was clicked while focus in input box call submit button clicked event
-    $("#NewQueueNoInputBox").keyup(function (event) {   
+    $("#NewQueueNoInputBox").keyup(function (event) {
         if (event.keyCode === 13) {
             //function definition in queueServiceMaster.js
             ForceNewQueueNo(document.getElementById("NewQueueNoInputBox").value);

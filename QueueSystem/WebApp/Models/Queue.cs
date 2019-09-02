@@ -18,25 +18,32 @@ namespace WebApp.Models
         public int RoomNo { get; set; }
         public DateTime Timestamp { get; set; }
 
-        private string queueNoMessage;
+        private string _queueNoMessage;
         public string QueueNoMessage
         {
             get
             {
                 if (IsBreak)
                 {
-                    queueNoMessage = "Przerwa";
+                    _queueNoMessage = "Przerwa";
+                }
+                else if (OwnerInitials.Length>0)
+                {
+                    _queueNoMessage = String.Concat(OwnerInitials, QueueNo.ToString());
                 }
                 else
                 {
-                    queueNoMessage = String.Concat(OwnerInitials, QueueNo.ToString());
+                    _queueNoMessage = "NZOZ";
                 }
 
-                return queueNoMessage;
+                return _queueNoMessage;
             }
         }
         public int UserId { get; set; }
 
-
+        public Queue()
+        {
+            OwnerInitials = string.Empty;
+        }
     }
 }

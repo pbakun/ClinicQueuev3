@@ -49,6 +49,7 @@ function ForceNewQueueNo(newNo) {
     connection.invoke("NewQueueNo", id, newNo, roomNo).catch(function (err) {
         return console.error(err.toString());
     });
+    document.getElementById("NewQueueNoInputBox").value = "";
     event.preventDefault();
 }
 
