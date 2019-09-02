@@ -1,9 +1,18 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<br />
+<div class="container">
+    <div class="btn-group btn-group-lg" role="group">
+
+        <a class="btn btn-info btn-lg" asp-area="Doctor" asp-controller="Doctor" asp-action="Index">Doctor</a>
+
+        <a class="btn btn-dark btn-lg" href="./patient/12">Pok. 12</a>
+
+        <a class="btn btn-dark btn-lg" href="./patient/14">Pok. 14</a>
+
+    </div>
+
 </div>
