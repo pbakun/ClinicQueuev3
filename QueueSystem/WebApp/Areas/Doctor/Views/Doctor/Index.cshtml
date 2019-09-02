@@ -38,16 +38,32 @@
 
             <div class="row">
                 <div class="col-4 offset-1">
-
-                    
                         <a class="text-secondary">Nadpisz numer:</a>
                         <input type="text" class="text-dark border-dark" id="NewQueueNoInputBox"  />
                         <a class="btn btn-success" id="NewQueueNoSubmit">New</a>
-                    
-
                 </div>
             </div>
-        </div>
+            <br />
+            <br />
+
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="additionalInfo">Dodatkowa informacja:</label>
+                    <textarea class="form-control" id="additionalInfo" rows="3">@Model.AdditionalMessage</textarea>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-1">
+                        <br />
+                        <a class="btn btn-secondary" style="margin: 5px;" id="SendAdditionalMessage">Wyślij</a>
+                        
+                        <a class="btn btn-danger" style="margin: 5px;" id="ClearAdditionalMessage">Wyczyść</a>
+                    </div>
+                </div>
+
+                        
+                </div>
+            </div>
     </form>
 
 
@@ -65,8 +81,6 @@
         if (event.keyCode === 13) {
             //function definition in queueServiceMaster.js
             ForceNewQueueNo(document.getElementById("NewQueueNoInputBox").value);
-            console.log("event fired");
-            $("#NewQueueNoSubmit").click();
         }
     });
 

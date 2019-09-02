@@ -5,10 +5,13 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/queueHub").build();
 
 
-
+//Set new QueueNoMessage if new one arrives. 
 connection.on("ReceiveQueueNo", function (user, message) {
     document.getElementById("QueueNo").innerHTML = message;
-console.log(message);
+});
+
+connection.on("ReceiveAdditionalInfo", function (id, message) {
+    document.getElementById("additionalInfo").value = message;
 });
 
 connection.start().then(function(){
@@ -49,9 +52,26 @@ function ForceNewQueueNo(newNo) {
     event.preventDefault();
 }
 
+//send -1 (sets break to true) to the server
 document.getElementById("Break").addEventListener("click", function (event) {
     connection.invoke("NewQueueNo", id, -1, roomNo).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
 });
+
+document.getElementById("SendAdditionalMessage").addEventListener("click", function (event) {
+    var message = document.getElementById("additionalInfo").value;
+    connection.invoke("NewAdditionalInfo", id, roomNo, message).catch(function (err) {
+        return console.error(err.toString());
+    });
+    event.preventDefault();
+});
+
+document.getElementById("ClearAdditionalMessage").addEventListener("click", function (event) {
+    connection.invoke("NewAdditionalInfo", id, roomNo, '').catch(function (err) {
+        return console.error(err.toString());
+    });
+    event.preventDefault();
+});
+

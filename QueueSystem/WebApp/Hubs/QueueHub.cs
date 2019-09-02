@@ -82,6 +82,18 @@ namespace WebApp.Hubs
             await Clients.Group(roomNo.ToString()).SendAsync("ReceiveQueueNo", userId, queue.QueueNoMessage);
         }
 
+        public async Task NewAdditionalInfo(int userId, int roomNo, string message)
+        {
+            var queue = _queueDb.Queue.Where(i => i.UserId == userId).FirstOrDefault();
+            if (message.Length > 0)
+                queue.AdditionalMessage = message;
+            else queue.AdditionalMessage = string.Empty;
+
+            queue.Timestamp = DateTime.UtcNow;
+            await _queueDb.SaveChangesAsync();
+
+            await Clients.Group(roomNo.ToString()).SendAsync("ReceiveAdditionalInfo", userId, queue.AdditionalMessage);
+        }
     }
 
     public class HubUser

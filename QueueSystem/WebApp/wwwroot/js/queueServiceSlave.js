@@ -14,6 +14,10 @@ connection.on("ReceiveQueueNo", function (user, message) {
     document.getElementById("QueueNo").textContent = message;
 });
 
+connection.on("ReceiveAdditionalInfo", function (id, message) {
+    document.getElementById("additionalInfo").innerHTML = message;
+});
+
 connection.start().then(function () {
     // todo
     connection.invoke("RegisterPatientView", roomNo).catch(function (err) {
