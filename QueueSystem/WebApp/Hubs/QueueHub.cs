@@ -27,7 +27,6 @@ namespace WebApp.Hubs
 
             await Groups.AddToGroupAsync(newUser.ConnectionId, newUser.GroupName);
 
-            //what is unique for each user (take care about refreshing)!
             if (!_connectedUsers.Contains(newUser))
                 _connectedUsers.Add(newUser);
         }
@@ -42,7 +41,6 @@ namespace WebApp.Hubs
 
             await Groups.AddToGroupAsync(newUser.ConnectionId, newUser.GroupName);
 
-            //what is unique for each user (take care about refreshing)!
             if(!_connectedUsers.Contains(newUser))
                 _connectedUsers.Add(newUser);
 
@@ -52,6 +50,9 @@ namespace WebApp.Hubs
         {
             string connectionString = Context.ConnectionId;
             var groupMember = _connectedUsers.Where(c => c.ConnectionId == Context.ConnectionId).FirstOrDefault();
+
+            //add some kind of erasing userId from his queue, delete queue Owner property, display desired info on PatientView
+
             _connectedUsers.Remove(groupMember);
             Groups.RemoveFromGroupAsync(connectionString, groupMember.GroupName);
 
@@ -61,11 +62,26 @@ namespace WebApp.Hubs
         public async Task NewQueueNo(int userId, int queueNo, int roomNo)
         {
             var queue = _queueDb.Queue.Where(i => i.UserId == userId).FirstOrDefault();
-            queue.QueueNo = queueNo;
+            if(queueNo > 0)
+            {
+                queue.QueueNo = queueNo;
+                queue.IsBreak = false;
+            }
+            else if(queueNo == -1 && queue.IsBreak == false)
+            {
+                queue.IsBreak = true;
+            }
+            else
+            {
+                queue.IsBreak = false;
+            }
+            
+            queue.Timestamp = DateTime.UtcNow;
             await _queueDb.SaveChangesAsync();
 
             await Clients.Group(roomNo.ToString()).SendAsync("ReceiveQueueNo", userId, queue.QueueNoMessage);
         }
+
     }
 
     public class HubUser

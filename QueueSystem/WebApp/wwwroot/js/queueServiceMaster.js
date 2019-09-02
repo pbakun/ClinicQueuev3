@@ -35,4 +35,23 @@ document.getElementById("NextNo").addEventListener("click", function (event) {
     event.preventDefault();
 });
 
+document.getElementById("NewQueueNoSubmit").addEventListener("click", function (event) {
+    var newNo = document.getElementById("NewQueueNoInputBox").value;
+    ForceNewQueueNo(newNo);
+});
 
+function ForceNewQueueNo(newNo) {
+    newNo = parseInt(newNo);
+    queueNo = newNo;
+    connection.invoke("NewQueueNo", id, newNo, roomNo).catch(function (err) {
+        return console.error(err.toString());
+    });
+    event.preventDefault();
+}
+
+document.getElementById("Break").addEventListener("click", function (event) {
+    connection.invoke("NewQueueNo", id, -1, roomNo).catch(function (err) {
+        return console.error(err.toString());
+    });
+    event.preventDefault();
+});

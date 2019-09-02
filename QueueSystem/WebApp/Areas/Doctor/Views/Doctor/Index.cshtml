@@ -14,7 +14,7 @@
 
     <div class="text-hide" id="RoomNo">@Model.RoomNo</div>
 
-    <form method="post">
+    <form method="post" onsubmit="return false">
         <div class="border-top border-dark">
             <br />
             <div class="row">
@@ -29,12 +29,22 @@
                 <div class="col-1">
                     <a class="btn btn-dark form-control text-light" id="NextNo">Next</a>
                 </div>
+
+                <div class="col-1">
+                    <a class="btn btn-info" id="Break">Break</a>
+                </div>
+
             </div>
 
             <div class="row">
                 <div class="col-4 offset-1">
-                    <a class="text-secondary">Nadpisz numer:</a>
-                    <input class="text-dark border-dark" />
+
+                    
+                        <a class="text-secondary">Nadpisz numer:</a>
+                        <input type="text" class="text-dark border-dark" id="NewQueueNoInputBox"  />
+                        <a class="btn btn-success" id="NewQueueNoSubmit">New</a>
+                    
+
                 </div>
             </div>
         </div>
@@ -43,11 +53,23 @@
 
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <script type="text/javascript">
     var roomNo = parseInt('@Model.RoomNo');
     var queueNo = parseInt('@Model.QueueNo');
     var id = parseInt('@Model.Id');
+
+    //if enter was clicked while focus in input box call submit button clicked event
+    $("#NewQueueNoInputBox").keyup(function (event) {   
+        if (event.keyCode === 13) {
+            //function definition in queueServiceMaster.js
+            ForceNewQueueNo(document.getElementById("NewQueueNoInputBox").value);
+            console.log("event fired");
+            $("#NewQueueNoSubmit").click();
+        }
+    });
+
 </script>
 
 <script src="~/lib/signalr/dist/browser/signalr.js"></script>
