@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Data;
 using WebApp.Models;
 
 namespace WebApp.Areas.Doctor.Controllers
 {
+    
     [Area("Doctor")]
     public class DoctorController : Controller
     {

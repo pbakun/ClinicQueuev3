@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,6 +41,19 @@ namespace WebApp
             //adding SQLite to app
             services.AddEntityFrameworkSqlite().AddDbContext<ApplicationDbContext>();
 
+            services.AddDefaultIdentity<IdentityUser>(config =>
+            {
+                config.Password.RequireNonAlphanumeric = false;
+                config.Password.RequireDigit = false;
+                config.Password.RequiredLength = 0;
+                config.Password.RequiredUniqueChars = 0;
+                config.Password.RequireUppercase = false;
+            })
+                .AddDefaultTokenProviders()
+                .AddDefaultUI(UIFramework.Bootstrap4)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSignalR();
@@ -68,7 +83,7 @@ namespace WebApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseAuthentication();
             app.UseSignalR(routes =>
             {
                 routes.MapHub<QueueHub>("/queueHub");
