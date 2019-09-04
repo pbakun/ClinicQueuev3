@@ -77,7 +77,8 @@
 <script type="text/javascript">
     var roomNo = parseInt('@Model.RoomNo');
     var queueNo = parseInt('@Model.QueueNo');
-    var id = parseInt('@Model.Id');
+    var id = '@Model.UserId';
+    console.log(id);
 
     //if enter was clicked while focus in input box call submit button clicked event
     $("#NewQueueNoInputBox").keyup(function (event) {

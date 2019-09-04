@@ -59,15 +59,12 @@ namespace WebApp.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-
             [Required]
             public string UserName { get; set; }
-
             [Required]
             public string FirstName { get; set; }
             [Required]
             public string LastName { get; set; }
-            
             public int RoomNo { get; set; }
         }
 
@@ -103,7 +100,6 @@ namespace WebApp.Areas.Identity.Pages.Account
                         await _roleManager.CreateAsync(new IdentityRole(StaticDetails.NurseUser));
                     if (!await _roleManager.RoleExistsAsync(StaticDetails.PatientUser))
                         await _roleManager.CreateAsync(new IdentityRole(StaticDetails.PatientUser));
-
 
 
                     _logger.LogInformation("User created a new account with password.");

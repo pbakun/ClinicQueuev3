@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,16 +15,33 @@ namespace WebApp.Areas.Doctor.Controllers
     public class DoctorController : Controller
     {
 
-        private readonly ApplicationDbContext _queueDb;
+        private readonly ApplicationDbContext _db;
 
         public DoctorController(ApplicationDbContext queue)
         {
-            _queueDb = queue;
+            _db = queue;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var queue = _queueDb.Queue.Where(i => i.UserId == 1).FirstOrDefault();
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            var user = _db.User.Where(u => u.Id == claim.Value).FirstOrDefault();
+
+            var queue = _db.Queue.Where(i => i.UserId == user.Id).FirstOrDefault();
+            if(queue == null)
+            {
+                queue = new Queue
+                {
+                    UserId = user.Id,
+                    OwnerInitials = String.Concat(user.FirstName.First(), user.LastName.First()),
+                    RoomNo = user.RoomNo,
+                    Timestamp = DateTime.UtcNow
+                };
+                await _db.Queue.AddAsync(queue);
+                await _db.SaveChangesAsync();
+            }
             
 
             return View(queue);
@@ -36,13 +54,13 @@ namespace WebApp.Areas.Doctor.Controllers
             
             if (ModelState.IsValid)
             {
-                Queue bla = _queueDb.Queue.FirstOrDefault();
+                Queue bla = _db.Queue.FirstOrDefault();
                 bla.QueueNo = 3;
                 bla.OwnerInitials = "PB";
                 bla.RoomNo = 12;
-                bla.UserId = 1;
-                _queueDb.Queue.Update(bla);
-                await _queueDb.SaveChangesAsync();
+                bla.UserId = "1";
+                _db.Queue.Update(bla);
+                await _db.SaveChangesAsync();
 
                 return View("Index", bla);
             }

@@ -47,7 +47,7 @@ namespace WebApp.DatabaseHelpers
             }
         }
 
-        public static Queue FindQueue(int? userId)
+        public static Queue FindQueue(string userId)
         {
             Queue user = new Queue();
             if (userId != null)

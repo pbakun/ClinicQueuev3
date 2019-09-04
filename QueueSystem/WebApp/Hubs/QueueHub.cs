@@ -17,7 +17,7 @@ namespace WebApp.Hubs
         {
             _queueDb = queueDb;
         }
-        public async Task RegisterDoctor(int userId, int roomNo)
+        public async Task RegisterDoctor(string userId, int roomNo)
         {
             var newUser = new HubUser {
                 Id = userId,
@@ -59,7 +59,7 @@ namespace WebApp.Hubs
             return base.OnDisconnectedAsync(exception);
         }
 
-        public async Task NewQueueNo(int userId, int queueNo, int roomNo)
+        public async Task NewQueueNo(string userId, int queueNo, int roomNo)
         {
             var queue = _queueDb.Queue.Where(i => i.UserId == userId).FirstOrDefault();
             if(queueNo > 0)
@@ -82,7 +82,7 @@ namespace WebApp.Hubs
             await Clients.Group(roomNo.ToString()).SendAsync("ReceiveQueueNo", userId, queue.QueueNoMessage);
         }
 
-        public async Task NewAdditionalInfo(int userId, int roomNo, string message)
+        public async Task NewAdditionalInfo(string userId, int roomNo, string message)
         {
             var queue = _queueDb.Queue.Where(i => i.UserId == userId).FirstOrDefault();
             if (message.Length > 0)
@@ -98,7 +98,7 @@ namespace WebApp.Hubs
 
     public class HubUser
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string ConnectionId { get; set; }
         public IClientProxy Client { get; set; }
 
