@@ -22,10 +22,10 @@ namespace WebApp.Areas.Main.Controllers
 
         public IActionResult Index()
         {
-            var users = _db.Users.ToList();
-            var queues = _db.Queue.ToList();
-            var roles = _db.Roles.ToList();
-            var role = _db.UserRoles.ToList();
+            //var users = _db.Users.ToList();
+            //var queues = _db.Queue.ToList();
+            //var roles = _db.Roles.ToList();
+            //var role = _db.UserRoles.ToList();
 
             return View();
         }

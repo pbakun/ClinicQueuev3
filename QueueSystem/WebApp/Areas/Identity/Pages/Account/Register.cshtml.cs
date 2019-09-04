@@ -101,6 +101,7 @@ namespace WebApp.Areas.Identity.Pages.Account
                     if (!await _roleManager.RoleExistsAsync(StaticDetails.PatientUser))
                         await _roleManager.CreateAsync(new IdentityRole(StaticDetails.PatientUser));
 
+                    await _userManager.AddToRoleAsync(user, StaticDetails.AdminUser);
 
                     _logger.LogInformation("User created a new account with password.");
 

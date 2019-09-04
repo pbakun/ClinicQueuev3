@@ -11,11 +11,11 @@ namespace WebApp.Hubs
     {
         private static List<HubUser> _connectedUsers = new List<HubUser>();
 
-        private readonly ApplicationDbContext _queueDb;
+        private readonly ApplicationDbContext _db;
 
         public QueueHub(ApplicationDbContext queueDb)
         {
-            _queueDb = queueDb;
+            _db = queueDb;
         }
         public async Task RegisterDoctor(string userId, int roomNo)
         {
@@ -52,6 +52,13 @@ namespace WebApp.Hubs
             var groupMember = _connectedUsers.Where(c => c.ConnectionId == Context.ConnectionId).FirstOrDefault();
 
             //add some kind of erasing userId from his queue, delete queue Owner property, display desired info on PatientView
+            var queue = _db.Queue.Where(i => i.UserId == groupMember.Id).FirstOrDefault();
+            if (queue != null)
+            {
+                queue.OwnerInitials = string.Empty;
+                _db.SaveChanges();
+            }
+            
 
             _connectedUsers.Remove(groupMember);
             Groups.RemoveFromGroupAsync(connectionString, groupMember.GroupName);
@@ -61,36 +68,42 @@ namespace WebApp.Hubs
 
         public async Task NewQueueNo(string userId, int queueNo, int roomNo)
         {
-            var queue = _queueDb.Queue.Where(i => i.UserId == userId).FirstOrDefault();
+            var queue = _db.Queue.Where(i => i.UserId == userId).FirstOrDefault();
             if(queueNo > 0)
             {
                 queue.QueueNo = queueNo;
                 queue.IsBreak = false;
+                queue.IsSpecial = false;
             }
             else if(queueNo == -1 && queue.IsBreak == false)
             {
                 queue.IsBreak = true;
             }
+            else if(queueNo == -2 && queue.IsSpecial == false)
+            {
+                queue.IsSpecial = true;
+            }
             else
             {
                 queue.IsBreak = false;
+                queue.IsSpecial = false;
             }
             
             queue.Timestamp = DateTime.UtcNow;
-            await _queueDb.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             await Clients.Group(roomNo.ToString()).SendAsync("ReceiveQueueNo", userId, queue.QueueNoMessage);
         }
 
         public async Task NewAdditionalInfo(string userId, int roomNo, string message)
         {
-            var queue = _queueDb.Queue.Where(i => i.UserId == userId).FirstOrDefault();
+            var queue = _db.Queue.Where(i => i.UserId == userId).FirstOrDefault();
             if (message.Length > 0)
                 queue.AdditionalMessage = message;
             else queue.AdditionalMessage = string.Empty;
 
             queue.Timestamp = DateTime.UtcNow;
-            await _queueDb.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             await Clients.Group(roomNo.ToString()).SendAsync("ReceiveAdditionalInfo", userId, queue.AdditionalMessage);
         }

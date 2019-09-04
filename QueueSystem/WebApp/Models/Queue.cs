@@ -27,6 +27,10 @@ namespace WebApp.Models
                 {
                     _queueNoMessage = "Przerwa";
                 }
+                else if(IsSpecial && OwnerInitials.Length > 0)
+                {
+                    _queueNoMessage = String.Concat(OwnerInitials, QueueNo.ToString(), "A");
+                }
                 else if (OwnerInitials.Length>0)
                 {
                     _queueNoMessage = String.Concat(OwnerInitials, QueueNo.ToString());
@@ -40,6 +44,7 @@ namespace WebApp.Models
             }
         }
         public string UserId { get; set; }
+        public bool IsSpecial { get; set; }
 
         public Queue()
         {

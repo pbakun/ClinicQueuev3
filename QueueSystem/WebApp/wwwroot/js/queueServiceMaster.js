@@ -61,6 +61,13 @@ document.getElementById("Break").addEventListener("click", function (event) {
     event.preventDefault();
 });
 
+document.getElementById("Special").addEventListener("click", function (event) {
+    connection.invoke("NewQueueNo", id, -2, roomNo).catch(function (err) {
+        return console.error(err.toString());
+    });
+    event.preventDefault();
+});
+
 document.getElementById("SendAdditionalMessage").addEventListener("click", function (event) {
     var message = document.getElementById("additionalInfo").value;
     connection.invoke("NewAdditionalInfo", id, roomNo, message).catch(function (err) {

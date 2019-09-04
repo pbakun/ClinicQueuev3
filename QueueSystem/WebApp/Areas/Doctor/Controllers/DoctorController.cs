@@ -10,7 +10,7 @@ using WebApp.Models;
 
 namespace WebApp.Areas.Doctor.Controllers
 {
-    
+    [Authorize]
     [Area("Doctor")]
     public class DoctorController : Controller
     {
@@ -30,19 +30,19 @@ namespace WebApp.Areas.Doctor.Controllers
             var user = _db.User.Where(u => u.Id == claim.Value).FirstOrDefault();
 
             var queue = _db.Queue.Where(i => i.UserId == user.Id).FirstOrDefault();
-            if(queue == null)
+            if (queue == null)
             {
                 queue = new Queue
                 {
                     UserId = user.Id,
-                    OwnerInitials = String.Concat(user.FirstName.First(), user.LastName.First()),
                     RoomNo = user.RoomNo,
                     Timestamp = DateTime.UtcNow
                 };
                 await _db.Queue.AddAsync(queue);
-                await _db.SaveChangesAsync();
+
             }
-            
+            queue.OwnerInitials = String.Concat(user.FirstName.First(), user.LastName.First());
+            await _db.SaveChangesAsync();
 
             return View(queue);
         }
@@ -54,15 +54,15 @@ namespace WebApp.Areas.Doctor.Controllers
             
             if (ModelState.IsValid)
             {
-                Queue bla = _db.Queue.FirstOrDefault();
-                bla.QueueNo = 3;
-                bla.OwnerInitials = "PB";
-                bla.RoomNo = 12;
-                bla.UserId = "1";
-                _db.Queue.Update(bla);
+                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+                var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+                var queue = _db.Queue.Where(u => u.UserId == claim.Value).FirstOrDefault();
+                queue.QueueNo++;
+                _db.Queue.Update(queue);
                 await _db.SaveChangesAsync();
 
-                return View("Index", bla);
+                return View("Index", queue);
             }
             //TODO
             return View();

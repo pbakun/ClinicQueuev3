@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApp.Data;
 
 namespace WebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190904195806_SpecialNoStatusAddedToQueue")]
+    partial class SpecialNoStatusAddedToQueue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,8 +189,6 @@ namespace WebApp.Migrations
 
                     b.Property<bool>("IsBreak");
 
-                    b.Property<bool>("IsSpecial");
-
                     b.Property<string>("OwnerInitials");
 
                     b.Property<int>("QueueNo");
@@ -198,6 +198,8 @@ namespace WebApp.Migrations
                     b.Property<DateTime>("Timestamp");
 
                     b.Property<string>("UserId");
+
+                    b.Property<bool>("isSpecial");
 
                     b.HasKey("Id");
 
