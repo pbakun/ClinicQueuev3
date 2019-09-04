@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using WebApp.Models;
 
 namespace WebApp.Areas.Identity.Pages.Account
 {
@@ -56,7 +57,7 @@ namespace WebApp.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required]
-            public string Username { get; set; }
+            public string UserName { get; set; }
 
             [Required]
             public string FirstName { get; set; }
@@ -76,24 +77,36 @@ namespace WebApp.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                //var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new User
+                {
+                    Email = Input.Email,
+                    UserName = Input.UserName,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    RoomNo = Input.RoomNo
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { userId = user.Id, code = code },
-                        protocol: Request.Scheme);
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var callbackUrl = Url.Page(
+                    //    "/Account/ConfirmEmail",
+                    //    pageHandler: null,
+                    //    values: new { userId = user.Id, code = code },
+                    //    protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    //return LocalRedirect(returnUrl);
+
+                    return RedirectToAction("Index", "Doctor", new { area = "Doctor" });
                 }
                 foreach (var error in result.Errors)
                 {
