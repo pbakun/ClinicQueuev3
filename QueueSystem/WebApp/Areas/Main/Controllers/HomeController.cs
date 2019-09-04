@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Data;
 using WebApp.Models;
 
 namespace WebApp.Areas.Main.Controllers
@@ -11,8 +12,19 @@ namespace WebApp.Areas.Main.Controllers
     [Area("Main")]
     public class HomeController : Controller
     {
+
+        private readonly ApplicationDbContext _db;
+
+        public HomeController(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
         public IActionResult Index()
         {
+            var users = _db.Users.ToList();
+
+
             return View();
         }
 

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using WebApp.Models;
+using WebApp.Utility;
 
 namespace WebApp.Areas.Identity.Pages.Account
 {
@@ -20,17 +21,20 @@ namespace WebApp.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         [BindProperty]
@@ -90,6 +94,18 @@ namespace WebApp.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    //creates all roles if not created yet
+                    if (!await _roleManager.RoleExistsAsync(StaticDetails.AdminUser))
+                        await _roleManager.CreateAsync(new IdentityRole(StaticDetails.AdminUser));
+                    if (!await _roleManager.RoleExistsAsync(StaticDetails.DoctorUser))
+                        await _roleManager.CreateAsync(new IdentityRole(StaticDetails.DoctorUser));
+                    if (!await _roleManager.RoleExistsAsync(StaticDetails.NurseUser))
+                        await _roleManager.CreateAsync(new IdentityRole(StaticDetails.NurseUser));
+                    if (!await _roleManager.RoleExistsAsync(StaticDetails.PatientUser))
+                        await _roleManager.CreateAsync(new IdentityRole(StaticDetails.PatientUser));
+
+
+
                     _logger.LogInformation("User created a new account with password.");
 
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

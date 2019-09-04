@@ -42,7 +42,7 @@ namespace WebApp
             //adding SQLite to app
             services.AddEntityFrameworkSqlite().AddDbContext<ApplicationDbContext>();
 
-            services.AddDefaultIdentity<IdentityUser>(config =>
+            services.AddIdentity<IdentityUser, IdentityRole>(config =>
             {
                 config.Password.RequireNonAlphanumeric = false;
                 config.Password.RequireDigit = false;
