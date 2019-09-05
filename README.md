@@ -1,2 +1,2 @@
 # ClinicQueuev3
-Queue system for clinic in ASP.NET Core 
+Queue system for clinic in ASP.NET Core using SignalR
