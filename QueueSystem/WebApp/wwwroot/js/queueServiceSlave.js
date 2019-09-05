@@ -18,6 +18,11 @@ connection.on("ReceiveAdditionalInfo", function (id, message) {
     document.getElementById("additionalInfo").innerHTML = message;
 });
 
+connection.on("ResetQueue", function (message) {
+    document.getElementById("QueueNo").textContent = message;
+    console.log(message);
+});
+
 connection.start().then(function () {
     // todo
     connection.invoke("RegisterPatientView", roomNo).catch(function (err) {

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj": {}
+    "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj": {}
   },
   "projects": {
-    "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj": {
+    "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
+        "projectUniqueName": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
         "projectName": "WebApp",
-        "projectPath": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
+        "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
         "packagesPath": "C:\\Users\\pbakun\\.nuget\\packages\\",
-        "outputPath": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\obj\\",
+        "outputPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
