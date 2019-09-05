@@ -26,7 +26,6 @@ namespace WebApp.Areas.Main.Controllers
             //var queues = _db.Queue.ToList();
             //var roles = _db.Roles.ToList();
             //var role = _db.UserRoles.ToList();
-
             return View();
         }
 
