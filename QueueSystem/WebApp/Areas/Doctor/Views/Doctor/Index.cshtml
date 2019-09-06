@@ -12,9 +12,8 @@
         </div>
     </div>
 
-    <div class="text-hide" id="RoomNo">@Model.RoomNo</div>
-
     <form method="post" onsubmit="return false">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="border-top border-dark">
             <br />
             <div class="row">
@@ -34,13 +33,20 @@
                     <a class="btn btn-info" id="Special">Special No</a>
 
                 </div>
-
-                <div class="col-3">
-                    <br />
-                    <select>
-                        <option>12</option>
-                    </select>
-                </div>
+                
+                    <div class="col-3">
+                        <br />
+                        @*TODO*@
+                        <label asp-for="RoomNo" class="form-check-inline">Nr gabinetu</label>
+                        <select asp-for="RoomNo" class="custom-select col-3">
+                            <option>12</option>
+                            <option>13</option>
+                        </select>
+                        <a asp-action="NewRoomNo" class="btn btn-info text-dark">Zmień</a>
+                        <span asp-validation-for="RoomNo" class="text-danger"></span>
+                    </div>
+                
+                
             </div>
             <br />
             <div class="row">

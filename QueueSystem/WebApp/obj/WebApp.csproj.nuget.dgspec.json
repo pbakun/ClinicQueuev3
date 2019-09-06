@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "c:\\_Kod\\ClinicQueuev3\\QueueSystem\\WebApp\\WebApp.csproj": {}
+    "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj": {}
   },
   "projects": {
-    "c:\\_Kod\\ClinicQueuev3\\QueueSystem\\WebApp\\WebApp.csproj": {
+    "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\_Kod\\ClinicQueuev3\\QueueSystem\\WebApp\\WebApp.csproj",
-        "projectName": "WebApp",
-        "projectPath": "c:\\_Kod\\ClinicQueuev3\\QueueSystem\\WebApp\\WebApp.csproj",
-        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "c:\\_Kod\\ClinicQueuev3\\QueueSystem\\WebApp\\obj\\",
+        "projectUniqueName": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj",
+        "projectName": "Entities",
+        "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj",
+        "packagesPath": "C:\\Users\\pbakun\\.nuget\\packages\\",
+        "outputPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pbakun\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -32,6 +32,138 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[2.2.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[2.2.6, )"
+            },
+            "Microsoft.Extensions.Identity.Stores": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj",
+        "projectName": "Repository",
+        "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj",
+        "packagesPath": "C:\\Users\\pbakun\\.nuget\\packages\\",
+        "outputPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\pbakun\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj": {
+                "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
+        "projectName": "WebApp",
+        "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
+        "packagesPath": "C:\\Users\\pbakun\\.nuget\\packages\\",
+        "outputPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\pbakun\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj": {
+                "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Repository;
 using WebApp.BackgroundServices.Tasks;
 using WebApp.Data;
 using WebApp.Hubs;
@@ -41,7 +43,10 @@ namespace WebApp
             });
 
             //adding SQLite to app
-            services.AddEntityFrameworkSqlite().AddDbContext<ApplicationDbContext>();
+            //services.AddEntityFrameworkSqlite().AddDbContext<ApplicationDbContext>();
+            //services.AddEntityFrameworkSqlite().AddDbContext<RepositoryContext>();
+            services.ConfigureSqliteContext();
+            services.ConfigureRepositoryWrapper();
 
             services.AddIdentity<IdentityUser, IdentityRole>(config =>
             {
@@ -53,9 +58,8 @@ namespace WebApp
             })
                 .AddDefaultTokenProviders()
                 .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<RepositoryContext>(); //would be best to add this in ServiceExtensions class in Repository library
 
-            var bla = new ApplicationDbContext();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -79,7 +83,7 @@ namespace WebApp
             }
 
             //create DB on startup
-            using (var db = new ApplicationDbContext())
+            using (var db = new RepositoryContext())
             {
                 db.Database.EnsureCreated();
                 

@@ -68,5 +68,13 @@ namespace WebApp.Areas.Doctor.Controllers
             return View();
             
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> NewRoomNo(Queue queue)
+        {
+
+            return View("Index", queue);
+        }
     }
 }

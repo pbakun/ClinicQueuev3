@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
+using Repository.Interfaces;
 using WebApp.Data;
 using WebApp.Models;
 
@@ -13,9 +15,9 @@ namespace WebApp.Areas.Main.Controllers
     public class HomeController : Controller
     {
 
-        private readonly ApplicationDbContext _db;
+        private IRepositoryWrapper _db;
 
-        public HomeController(ApplicationDbContext db)
+        public HomeController(IRepositoryWrapper db)
         {
             _db = db;
         }
@@ -26,6 +28,9 @@ namespace WebApp.Areas.Main.Controllers
             //var queues = _db.Queue.ToList();
             //var roles = _db.Roles.ToList();
             //var role = _db.UserRoles.ToList();
+            var bla = _db.User.FindAll();
+            var queue = _db.Queue.FindAll();
+
             return View();
         }
 

@@ -152,3 +152,7 @@ c:\_Kod\ClinicQueuev3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Adm
 c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Admin\Views\User\Index.g.cshtml.cs
 c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Admin\Views\_ViewImports.g.cshtml.cs
 c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Admin\Views\_ViewStart.g.cshtml.cs
+c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\bin\Debug\netcoreapp2.2\Entities.dll
+c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\bin\Debug\netcoreapp2.2\Repository.dll
+c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\bin\Debug\netcoreapp2.2\Repository.pdb
+c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\bin\Debug\netcoreapp2.2\Entities.pdb
