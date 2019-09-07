@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Interfaces;
-using WebApp.Data;
 using WebApp.Models;
 
 namespace WebApp.Areas.Main.Controllers
@@ -30,6 +29,12 @@ namespace WebApp.Areas.Main.Controllers
             //var role = _db.UserRoles.ToList();
             var bla = _db.User.FindAll();
             var queue = _db.Queue.FindAll();
+            foreach(var element in queue)
+            {
+                if(element.QueueNo==0)
+                    _db.Queue.Delete(element);
+            }
+            _db.SaveAsync();
 
             return View();
         }

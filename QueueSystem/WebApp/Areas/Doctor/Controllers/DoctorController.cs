@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebApp.Data;
+using Repository.Interfaces;
 using WebApp.Models;
 
 namespace WebApp.Areas.Doctor.Controllers
@@ -15,11 +16,13 @@ namespace WebApp.Areas.Doctor.Controllers
     public class DoctorController : Controller
     {
 
-        private readonly ApplicationDbContext _db;
+        private IRepositoryWrapper _repo;
+        private readonly IMapper _mapper;
 
-        public DoctorController(ApplicationDbContext queue)
+        public DoctorController(IRepositoryWrapper repo, IMapper mapper)
         {
-            _db = queue;
+            _repo = repo;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
@@ -27,9 +30,9 @@ namespace WebApp.Areas.Doctor.Controllers
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-            var user = _db.User.Where(u => u.Id == claim.Value).FirstOrDefault();
+            var user = _repo.User.FindByCondition(u => u.Id == claim.Value).FirstOrDefault();
 
-            var queue = _db.Queue.Where(i => i.UserId == user.Id).FirstOrDefault();
+            var queue = _repo.Queue.FindByCondition(i => i.UserId == user.Id).FirstOrDefault();
             if (queue == null)
             {
                 queue = new Queue
@@ -38,13 +41,16 @@ namespace WebApp.Areas.Doctor.Controllers
                     RoomNo = user.RoomNo,
                     Timestamp = DateTime.UtcNow
                 };
-                await _db.Queue.AddAsync(queue);
+                await _repo.Queue.AddAsync(queue);
 
             }
             queue.OwnerInitials = String.Concat(user.FirstName.First(), user.LastName.First());
-            await _db.SaveChangesAsync();
+            _repo.Queue.Update(queue);
+            await _repo.SaveAsync();
 
-            return View(queue);
+            var outputQueue = _mapper.Map<Queue>(queue);
+
+            return View(outputQueue);
         }
 
         [HttpPost]
@@ -57,10 +63,10 @@ namespace WebApp.Areas.Doctor.Controllers
                 var claimsIdentity = (ClaimsIdentity)this.User.Identity;
                 var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-                var queue = _db.Queue.Where(u => u.UserId == claim.Value).FirstOrDefault();
+                var queue = _repo.Queue.FindByCondition(u => u.UserId == claim.Value).FirstOrDefault();
                 queue.QueueNo++;
-                _db.Queue.Update(queue);
-                await _db.SaveChangesAsync();
+                _repo.Queue.Update(queue);
+                await _repo.SaveAsync();
 
                 return View("Index", queue);
             }

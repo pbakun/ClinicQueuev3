@@ -10,8 +10,10 @@ namespace Repository.Interfaces
     {
         IQueryable<T> FindAll();
         IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
-        void Create(T entity);
+        void Add(T entity);
+        Task AddAsync(T entity);
         void Update(T entity);
+        void UpdateList(IEnumerable<T> entity);
         void Delete(T entity);
     }
 }

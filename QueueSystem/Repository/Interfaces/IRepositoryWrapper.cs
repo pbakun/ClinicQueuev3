@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Repository.Interfaces
 {
@@ -9,5 +10,6 @@ namespace Repository.Interfaces
         IQueueRepository Queue { get; }
         IUserRepository User { get; }
         void Save();
+        Task SaveAsync();
     }
 }

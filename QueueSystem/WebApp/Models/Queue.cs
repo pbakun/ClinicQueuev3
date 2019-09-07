@@ -6,18 +6,8 @@ using System.Threading.Tasks;
 
 namespace WebApp.Models
 {
-    public class Queue
+    public class Queue : Entities.Models.Queue
     {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
-
-        public int QueueNo { get; set; }
-        public bool IsBreak { get; set; }
-        public string AdditionalMessage { get; set; }
-        public string OwnerInitials { get; set; }
-        public int RoomNo { get; set; }
-        public DateTime Timestamp { get; set; }
-
         private string _queueNoMessage;
         public string QueueNoMessage
         {
@@ -27,11 +17,11 @@ namespace WebApp.Models
                 {
                     _queueNoMessage = "Przerwa";
                 }
-                else if(IsSpecial && OwnerInitials.Length > 0)
+                else if (IsSpecial && OwnerInitials.Length > 0)
                 {
                     _queueNoMessage = String.Concat(OwnerInitials, QueueNo.ToString(), "A");
                 }
-                else if (OwnerInitials.Length>0)
+                else if (OwnerInitials.Length > 0)
                 {
                     _queueNoMessage = String.Concat(OwnerInitials, QueueNo.ToString());
                 }
@@ -43,12 +33,11 @@ namespace WebApp.Models
                 return _queueNoMessage;
             }
         }
-        public string UserId { get; set; }
-        public bool IsSpecial { get; set; }
 
-        public Queue()
+        public Queue() : base()
         {
             OwnerInitials = string.Empty;
         }
+
     }
 }

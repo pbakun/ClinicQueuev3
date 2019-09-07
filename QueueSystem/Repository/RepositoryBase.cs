@@ -2,8 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Repository.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Repository
 {
@@ -25,9 +27,14 @@ namespace Repository
             return this.RepositoryContext.Set<T>().Where(expression).AsNoTracking();
         }
 
-        public void Create(T entity)
+        public void Add(T entity)
         {
             this.RepositoryContext.Set<T>().Add(entity);
+        }
+
+        public async Task AddAsync(T entity)
+        {
+            await this.RepositoryContext.Set<T>().AddAsync(entity);
         }
 
         public void Delete(T entity)
@@ -35,9 +42,15 @@ namespace Repository
             this.RepositoryContext.Set<T>().Remove(entity);
         }
 
+
         public void Update(T entity)
         {
             this.RepositoryContext.Set<T>().Update(entity);
+        }
+
+        public void UpdateList(IEnumerable<T> entity)
+        {
+            this.RepositoryContext.Set<T>().UpdateRange(entity);
         }
     }
 }

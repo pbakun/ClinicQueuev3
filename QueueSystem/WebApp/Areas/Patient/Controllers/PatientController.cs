@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-
-using WebApp.Data;
+using Repository.Interfaces;
 using WebApp.Models;
-
 
 namespace WebApp.Areas.Patient.Controllers
 {
@@ -14,11 +13,13 @@ namespace WebApp.Areas.Patient.Controllers
     public class PatientController : Controller
     {
 
-        private readonly ApplicationDbContext _queueDb;
+        private readonly IRepositoryWrapper _repo;
+        private readonly IMapper _mapper;
 
-        public PatientController(ApplicationDbContext queueDb)
+        public PatientController(IRepositoryWrapper repo, IMapper mapper)
         {
-            _queueDb = queueDb;
+            _repo = repo;
+            _mapper = mapper;
         }
 
         [Route("patient/{roomNo}")]
@@ -28,15 +29,18 @@ namespace WebApp.Areas.Patient.Controllers
            int roomNoInt = Convert.ToInt32(roomNo);
 
             //todo: what in case of few queue with the same room?
-            Queue queue = _queueDb.Queue.Where(m => m.RoomNo == roomNoInt).FirstOrDefault();
+            var queue = _repo.Queue.FindByCondition(m => m.RoomNo == roomNoInt).FirstOrDefault();
+            
             if(queue == null)
             {
                 queue = new Queue();
                 queue.RoomNo = roomNoInt;
-
+                _repo.Queue.Add(queue);
             }
 
-            return View(queue);
+            Queue outputQueue = _mapper.Map<Queue>(queue);
+
+            return View(outputQueue);
 
         }
     }

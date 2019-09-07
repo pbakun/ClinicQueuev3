@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebApp.Data;
+using Repository.Interfaces;
+using WebApp.Models;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -13,11 +15,13 @@ namespace WebApp.Areas.Admin.Controllers
     [Area("Admin")]
     public class UserController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IRepositoryWrapper _repo;
+        private readonly IMapper _mapper;
 
-        public UserController(ApplicationDbContext db)
+        public UserController(IRepositoryWrapper repo, IMapper mapper)
         {
-            _db = db;
+            _repo = repo;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
@@ -25,9 +29,9 @@ namespace WebApp.Areas.Admin.Controllers
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-            var users = _db.User.ToList();
-
-            return View(users);
+            var users = _repo.User.FindAll().ToList();
+            var outputUsers = _mapper.Map <List<User>> (users);
+            return View(outputUsers);
         }
     }
 }

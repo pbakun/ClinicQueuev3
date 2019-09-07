@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.SignalR;
+using Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApp.Data;
+using WebApp.Models;
 
 namespace WebApp.Hubs
 {
@@ -11,11 +13,13 @@ namespace WebApp.Hubs
     {
         private static List<HubUser> _connectedUsers = new List<HubUser>();
 
-        private readonly ApplicationDbContext _db;
+        private readonly IRepositoryWrapper _repo;
+        private readonly IMapper _mapper;
 
-        public QueueHub(ApplicationDbContext queueDb)
+        public QueueHub(IRepositoryWrapper repo, IMapper mapper)
         {
-            _db = queueDb;
+            _repo = repo;
+            _mapper = mapper;
         }
         public async Task RegisterDoctor(string userId, int roomNo)
         {
@@ -52,11 +56,11 @@ namespace WebApp.Hubs
             var groupMember = _connectedUsers.Where(c => c.ConnectionId == Context.ConnectionId).FirstOrDefault();
 
             //add some kind of erasing userId from his queue, delete queue Owner property, display desired info on PatientView
-            var queue = _db.Queue.Where(i => i.UserId == groupMember.Id).FirstOrDefault();
+            var queue = _repo.Queue.FindByCondition(i => i.UserId == groupMember.Id).FirstOrDefault();
             if (queue != null)
             {
                 queue.OwnerInitials = string.Empty;
-                _db.SaveChanges();
+                _repo.Save();
             }
             
 
@@ -68,7 +72,8 @@ namespace WebApp.Hubs
 
         public async Task NewQueueNo(string userId, int queueNo, int roomNo)
         {
-            var queue = _db.Queue.Where(i => i.UserId == userId).FirstOrDefault();
+            var queue = _repo.Queue.FindByCondition(i => i.UserId == userId).FirstOrDefault();
+            
             if(queueNo > 0)
             {
                 queue.QueueNo = queueNo;
@@ -90,22 +95,29 @@ namespace WebApp.Hubs
             }
             
             queue.Timestamp = DateTime.UtcNow;
-            await _db.SaveChangesAsync();
+            _repo.Queue.Update(queue);
+            _repo.Save();
 
-            await Clients.Group(roomNo.ToString()).SendAsync("ReceiveQueueNo", userId, queue.QueueNoMessage);
+            var outputQueue = _mapper.Map<Queue>(queue);
+
+            await Clients.Group(roomNo.ToString()).SendAsync("ReceiveQueueNo", userId, outputQueue.QueueNoMessage);
         }
 
         public async Task NewAdditionalInfo(string userId, int roomNo, string message)
         {
-            var queue = _db.Queue.Where(i => i.UserId == userId).FirstOrDefault();
+            var queue = _repo.Queue.FindByCondition(i => i.UserId == userId).FirstOrDefault();
             if (message.Length > 0)
                 queue.AdditionalMessage = message;
             else queue.AdditionalMessage = string.Empty;
 
             queue.Timestamp = DateTime.UtcNow;
-            await _db.SaveChangesAsync();
 
-            await Clients.Group(roomNo.ToString()).SendAsync("ReceiveAdditionalInfo", userId, queue.AdditionalMessage);
+            _repo.Queue.Update(queue);
+            await _repo.SaveAsync();
+
+            var outputQueue = _mapper.Map<Queue>(queue);
+
+            await Clients.Group(roomNo.ToString()).SendAsync("ReceiveAdditionalInfo", userId, outputQueue.AdditionalMessage);
         }
     }
 
