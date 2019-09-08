@@ -11,8 +11,8 @@
             <h2 class="text-info">Kolejka</h2>
         </div>
     </div>
-
-    <form method="post" onsubmit="return false">
+    @*onsubmit="return false"*@
+    <form method="post" asp-action="Next">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="border-top border-dark">
             <br />
@@ -33,27 +33,27 @@
                     <a class="btn btn-info" id="Special">Special No</a>
 
                 </div>
-                
-                    <div class="col-3">
-                        <br />
-                        @*TODO*@
-                        <label asp-for="RoomNo" class="form-check-inline">Nr gabinetu</label>
-                        <select asp-for="RoomNo" class="custom-select col-3">
-                            <option>12</option>
-                            <option>13</option>
-                        </select>
-                        <a asp-action="NewRoomNo" class="btn btn-info text-dark">Zmień</a>
-                        <span asp-validation-for="RoomNo" class="text-danger"></span>
-                    </div>
-                
-                
+
+                <div class="col-3">
+                    <br />
+                    @*TODO*@
+                    <label asp-for="RoomNo" class="form-check-inline">Nr gabinetu</label>
+                    <select asp-for="RoomNo" class="custom-select col-3">
+                        <option>12</option>
+                        <option>13</option>
+                    </select>
+                    <button type="submit" asp-action="NewRoomNo" class="btn btn-info text-dark">Zmień</button>
+                    <span asp-validation-for="RoomNo" class="text-danger"></span>
+                </div>
+
+
             </div>
             <br />
             <div class="row">
                 <div class="col-lg-2 col-sm-3 offset-1">
                     <label for="NewQueueNoInputBox">Nadpisz numer:</label>
                     <input type="number" class="text-dark text-left form-control" id="NewQueueNoInputBox" />
-                    
+
                 </div>
                 <div class="col-lg-1 col-sm-2">
                     <br />

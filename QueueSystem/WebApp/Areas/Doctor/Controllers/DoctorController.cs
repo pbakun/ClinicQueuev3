@@ -68,7 +68,9 @@ namespace WebApp.Areas.Doctor.Controllers
                 _repo.Queue.Update(queue);
                 await _repo.SaveAsync();
 
-                return View("Index", queue);
+                var outputQueue = _mapper.Map<Queue>(queue);
+
+                return View("Index", outputQueue);
             }
             //TODO
             return View();
@@ -77,6 +79,7 @@ namespace WebApp.Areas.Doctor.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Doctor/Doctor/NewRoomNo")]
         public async Task<IActionResult> NewRoomNo(Queue queue)
         {
 

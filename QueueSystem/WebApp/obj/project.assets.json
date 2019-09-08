@@ -13440,11 +13440,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
+      "projectUniqueName": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
       "projectName": "WebApp",
-      "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
+      "projectPath": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
       "packagesPath": "C:\\Users\\pbakun\\.nuget\\packages\\",
-      "outputPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\obj\\",
+      "outputPath": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -13465,8 +13465,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj": {
-              "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj"
+            "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj": {
+              "projectPath": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj"
             }
           }
         }
