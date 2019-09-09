@@ -52,7 +52,7 @@ namespace WebApp.Areas.Patient.Controllers
             PatientVM.QueueNoMessage = queue.QueueNoMessage;
             PatientVM.QueueAdditionalInfo = queue.AdditionalMessage;
 
-            return View(queue);
+            return View(PatientVM);
 
         }
     }
