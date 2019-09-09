@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Interfaces;
 using WebApp.Models;
+using WebApp.Models.ViewModel;
+using WebApp.ServiceLogic;
 
 namespace WebApp.Areas.Doctor.Controllers
 {
@@ -18,11 +20,16 @@ namespace WebApp.Areas.Doctor.Controllers
 
         private IRepositoryWrapper _repo;
         private readonly IMapper _mapper;
+        private readonly IQueueService _queueService;
 
-        public DoctorController(IRepositoryWrapper repo, IMapper mapper)
+        [BindProperty]
+        public DoctorViewModel DoctorVM { get; set; }
+
+        public DoctorController(IRepositoryWrapper repo, IMapper mapper, IQueueService queueService)
         {
             _repo = repo;
             _mapper = mapper;
+            _queueService = queueService;
         }
 
         public async Task<IActionResult> Index()
@@ -31,28 +38,17 @@ namespace WebApp.Areas.Doctor.Controllers
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
             var user = _repo.User.FindByCondition(u => u.Id == claim.Value).FirstOrDefault();
+            if (user == null)
+                return NotFound();
 
-            var queue = _repo.Queue.FindByCondition(i => i.UserId == user.Id).FirstOrDefault();
-            if (queue == null)
+            var queue = _queueService.FindByUserId(user.Id);
+
+            DoctorVM = new DoctorViewModel()
             {
-                queue = new Queue
-                {
-                    UserId = user.Id,
-                    RoomNo = user.RoomNo,
-                    QueueNo = 1,
-                    Timestamp = DateTime.UtcNow
-                }; 
-                await _repo.Queue.AddAsync(_mapper.Map<Entities.Models.Queue>(queue));
+                Queue = queue
+            };
 
-            }
-            queue.OwnerInitials = String.Concat(user.FirstName.First(), user.LastName.First());
-            var queueToDb = _mapper.Map<Entities.Models.Queue>(queue);
-            _repo.Queue.Update(queueToDb);
-            await _repo.SaveAsync();
-
-            var outputQueue = _mapper.Map<Queue>(queue);
-
-            return View(outputQueue);
+            return View(DoctorVM);
         }
 
         [HttpPost]
@@ -74,37 +70,25 @@ namespace WebApp.Areas.Doctor.Controllers
 
                 return View("Index", outputQueue);
             }
-            //TODO
-            return View();
+            
+            return NotFound();
             
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Doctor/Doctor/NewRoomNo")]
-        public async Task<IActionResult> NewRoomNo(int roomNo)
+        public async Task<IActionResult> NewRoomNo(DoctorViewModel VM)
         {
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-
+            int roomNo = VM.Queue.RoomNo;
             var user = _repo.User.FindByCondition(u => u.Id == claim.Value).FirstOrDefault();
-            user.RoomNo = roomNo;
-            _repo.User.Update(user);
-
-            var queue = _repo.Queue.FindByCondition(m => m.UserId == claim.Value).FirstOrDefault();
-            if (queue != null)
-            {
-                queue.OwnerInitials = string.Empty;
-                queue.RoomNo = roomNo;
-                queue.Timestamp = DateTime.UtcNow;
-                _repo.Queue.Update(queue);
-            }
             
-            await _repo.SaveAsync();
+            var queue = _queueService.ChangeUserRoomNo(user.Id, roomNo);
+            DoctorVM.Queue = queue;
 
-            var outputQueue = _mapper.Map<Queue>(queue);
-
-            return View("Index", outputQueue);
+            return View("Index", DoctorVM);
         }
     }
 }

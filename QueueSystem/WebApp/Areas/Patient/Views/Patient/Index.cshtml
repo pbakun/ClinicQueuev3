@@ -1,4 +1,4 @@
-﻿@model WebApp.Models.Queue
+﻿@model WebApp.Models.ViewModel.PatientViewModel
 @{
     ViewData["Title"] = "System Kolejkowy";
 }
@@ -34,7 +34,7 @@
 
     <footer class="border-top footer fixed-bottom">
         <div class="container">
-            <div class="text-info" id="additionalInfo">@Model.AdditionalMessage</div>
+            <div class="text-info" id="additionalInfo">@Model.QueueAdditionalInfo</div>
         </div>
     </footer>
 </div>

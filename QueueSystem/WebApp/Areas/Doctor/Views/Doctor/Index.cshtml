@@ -1,4 +1,4 @@
-﻿@model WebApp.Models.Queue
+﻿@model WebApp.Models.ViewModel.DoctorViewModel
 @{
     ViewData["Title"] = "System Kolejkowy";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-lg-2 col-sm-3 offset-1 text-nowrap">
                     <label for="QueueNo">Obecny pacjent:</label>
-                    <a class="text-left text-dark font-weight-bold form-inline" style="font-size:25px;" id="QueueNo">@Html.DisplayFor(m => m.QueueNoMessage)</a>
+                    <a class="text-left text-dark font-weight-bold form-inline" style="font-size:25px;" id="QueueNo">@Html.DisplayFor(m => m.Queue.QueueNoMessage)</a>
 
                 </div>
                 <div class="col-lg-4 col-sm-5">
@@ -36,14 +36,16 @@
 
                 <div class="col-3">
                     <br />
-                    @*TODO*@
-                    <label asp-for="RoomNo" class="form-check-inline">Nr gabinetu</label>
-                    <select asp-for="RoomNo" class="custom-select col-3">
-                        <option>12</option>
-                        <option>13</option>
+                    <label asp-for="Queue.RoomNo" class="form-check-inline">Nr gabinetu</label>
+                    <select asp-for="Queue.RoomNo" class="custom-select col-3" id="RoomSelection">
+                        @foreach(var item in Model.AvailableRoomNo)
+                        {
+                            <option>@Html.DisplayFor(m => item)</option>
+                        }
+                        
                     </select>
                     <button type="submit" asp-action="NewRoomNo" class="btn btn-info text-dark">Zmień</button>
-                    <span asp-validation-for="RoomNo" class="text-danger"></span>
+                    <span asp-validation-for="Queue.RoomNo" class="text-danger"></span>
                 </div>
 
 
@@ -66,7 +68,7 @@
             <div class="row">
                 <div class="form-group col-6 offset-1">
                     <label for="additionalInfo">Dodatkowa informacja:</label>
-                    <textarea class="form-control" id="additionalInfo" rows="3">@Model.AdditionalMessage</textarea>
+                    <textarea class="form-control" id="additionalInfo" rows="3">@Model.Queue.AdditionalMessage</textarea>
 
                 </div>
                 <div class="row">
@@ -89,9 +91,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-    var roomNo = parseInt('@Model.RoomNo');
-    var queueNo = parseInt('@Model.QueueNo');
-    var id = '@Model.UserId';
+    var roomNo = parseInt('@Model.Queue.RoomNo');
+    var queueNo = parseInt('@Model.Queue.QueueNo');
+    var id = '@Model.Queue.UserId';
     console.log(id);
 
     //if enter was clicked while focus in input box call submit button clicked event
@@ -101,6 +103,8 @@
             ForceNewQueueNo(document.getElementById("NewQueueNoInputBox").value);
         }
     });
+
+    document.getElementById("RoomSelection").value = roomNo;
 
 </script>
 

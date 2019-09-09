@@ -16,5 +16,7 @@ namespace WebApp.Utility
         public const string DoctorUser = "Doctor";
         public const string NurseUser = "Nurse";
         public const string PatientUser = "Patient";
+
+        public const string DoctorNamePrefix = "Lek. med. ";
     }
 }

@@ -18,6 +18,7 @@ using Repository;
 using WebApp.BackgroundServices.Tasks;
 using WebApp.Hubs;
 using WebApp.Mappings;
+using WebApp.ServiceLogic;
 
 namespace WebApp
 {
@@ -63,6 +64,8 @@ namespace WebApp
 
             
             services.AddAutoMapper(typeof(MappingProfile));
+
+            services.AddScoped<IQueueService, QueueService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
