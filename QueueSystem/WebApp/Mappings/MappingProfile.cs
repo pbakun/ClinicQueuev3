@@ -12,6 +12,7 @@ namespace WebApp.Mappings
         public MappingProfile()
         {
             CreateMap<Entities.Models.Queue, Queue>();
+            CreateMap<Queue, Entities.Models.Queue>();
             CreateMap<Entities.Models.User, User>();
         }
     }

@@ -35,12 +35,9 @@ namespace WebApp.Areas.Patient.Controllers
             {
                 queue = new Queue();
                 queue.RoomNo = roomNoInt;
-                _repo.Queue.Add(queue);
             }
 
-            Queue outputQueue = _mapper.Map<Queue>(queue);
-
-            return View(outputQueue);
+            return View(queue);
 
         }
     }

@@ -60,10 +60,16 @@ namespace WebApp.Hubs
             if (queue != null)
             {
                 queue.OwnerInitials = string.Empty;
+                _repo.Queue.Update(queue);
                 _repo.Save();
-            }
-            
 
+                var outputQueue = _mapper.Map<Queue>(queue);
+                Clients.Group(queue.RoomNo.ToString()).SendAsync("Refresh", groupMember.GroupName);
+                //Clients.Group(queue.RoomNo.ToString()).SendAsync("ReceiveQueueNo", groupMember.Id, outputQueue.QueueNoMessage);
+                //Clients.Group(queue.RoomNo.ToString()).SendAsync("ReceiveAdditionalInfo", groupMember.Id, string.Empty);
+            }
+
+            
             _connectedUsers.Remove(groupMember);
             Groups.RemoveFromGroupAsync(connectionString, groupMember.GroupName);
 
@@ -126,7 +132,6 @@ namespace WebApp.Hubs
         public string Id { get; set; }
         public string ConnectionId { get; set; }
         public IClientProxy Client { get; set; }
-
         public string GroupName { get; set; }
     }
 }

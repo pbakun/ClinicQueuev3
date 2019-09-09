@@ -39,13 +39,15 @@ namespace WebApp.Areas.Doctor.Controllers
                 {
                     UserId = user.Id,
                     RoomNo = user.RoomNo,
+                    QueueNo = 1,
                     Timestamp = DateTime.UtcNow
-                };
-                await _repo.Queue.AddAsync(queue);
+                }; 
+                await _repo.Queue.AddAsync(_mapper.Map<Entities.Models.Queue>(queue));
 
             }
             queue.OwnerInitials = String.Concat(user.FirstName.First(), user.LastName.First());
-            _repo.Queue.Update(queue);
+            var queueToDb = _mapper.Map<Entities.Models.Queue>(queue);
+            _repo.Queue.Update(queueToDb);
             await _repo.SaveAsync();
 
             var outputQueue = _mapper.Map<Queue>(queue);
@@ -80,10 +82,29 @@ namespace WebApp.Areas.Doctor.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Doctor/Doctor/NewRoomNo")]
-        public async Task<IActionResult> NewRoomNo(Queue queue)
+        public async Task<IActionResult> NewRoomNo(int roomNo)
         {
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-            return View("Index", queue);
+            var user = _repo.User.FindByCondition(u => u.Id == claim.Value).FirstOrDefault();
+            user.RoomNo = roomNo;
+            _repo.User.Update(user);
+
+            var queue = _repo.Queue.FindByCondition(m => m.UserId == claim.Value).FirstOrDefault();
+            if (queue != null)
+            {
+                queue.OwnerInitials = string.Empty;
+                queue.RoomNo = roomNo;
+                queue.Timestamp = DateTime.UtcNow;
+                _repo.Queue.Update(queue);
+            }
+            
+            await _repo.SaveAsync();
+
+            var outputQueue = _mapper.Map<Queue>(queue);
+
+            return View("Index", outputQueue);
         }
     }
 }
