@@ -156,3 +156,7 @@ c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\bin\Debug\netcoreapp2.2\Entities.dll
 c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\bin\Debug\netcoreapp2.2\Repository.dll
 c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\bin\Debug\netcoreapp2.2\Repository.pdb
 c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\bin\Debug\netcoreapp2.2\Entities.pdb
+c:\_Kod\ClinicQueuev3\QueueSystem\WebApp\bin\Debug\netcoreapp2.2\Entities.dll
+c:\_Kod\ClinicQueuev3\QueueSystem\WebApp\bin\Debug\netcoreapp2.2\Repository.dll
+c:\_Kod\ClinicQueuev3\QueueSystem\WebApp\bin\Debug\netcoreapp2.2\Repository.pdb
+c:\_Kod\ClinicQueuev3\QueueSystem\WebApp\bin\Debug\netcoreapp2.2\Entities.pdb

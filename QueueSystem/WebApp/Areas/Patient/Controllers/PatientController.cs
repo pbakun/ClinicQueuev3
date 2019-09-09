@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Interfaces;
+using WebApp.Helpers;
 using WebApp.Models;
 using WebApp.Models.ViewModel;
 using WebApp.ServiceLogic;
@@ -47,7 +48,7 @@ namespace WebApp.Areas.Patient.Controllers
             else
             {
                 var user = _repo.User.FindByCondition(u => u.Id == queue.UserId).FirstOrDefault();
-                PatientVM.DoctorFullName = String.Concat(StaticDetails.DoctorNamePrefix, user.FirstName, " ", user.LastName);
+                PatientVM.DoctorFullName = QueueHelper.GetDoctorFullName(user);
             }
             PatientVM.QueueNoMessage = queue.QueueNoMessage;
             PatientVM.QueueAdditionalInfo = queue.AdditionalMessage;

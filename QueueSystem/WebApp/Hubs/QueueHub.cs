@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.Helpers;
 using WebApp.Models;
 using WebApp.ServiceLogic;
+using WebApp.Utility;
 
 namespace WebApp.Hubs
 {
@@ -34,6 +36,17 @@ namespace WebApp.Hubs
 
             await Groups.AddToGroupAsync(newUser.ConnectionId, newUser.GroupName);
 
+            var user = _repo.User.FindByCondition(u => u.Id == userId).FirstOrDefault();
+
+            string doctorFullName = QueueHelper.GetDoctorFullName(user);
+
+            await Clients.Group(roomNo.ToString()).SendAsync("ReceiveDoctorFullName", userId, doctorFullName);
+
+            var queue = _queueService.FindByUserId(userId);
+
+            await Clients.Group(roomNo.ToString()).SendAsync("ReceiveQueueNo", userId, queue.QueueNoMessage);
+            await Clients.Group(roomNo.ToString()).SendAsync("ReceiveAdditionalInfo", userId, queue.AdditionalMessage);
+
             if (!_connectedUsers.Contains(newUser))
                 _connectedUsers.Add(newUser);
         }
@@ -58,20 +71,7 @@ namespace WebApp.Hubs
             string connectionString = Context.ConnectionId;
             var groupMember = _connectedUsers.Where(c => c.ConnectionId == Context.ConnectionId).FirstOrDefault();
             int memberRoomNo = Convert.ToInt32(groupMember.GroupName);
-            //add some kind of erasing userId from his queue, delete queue Owner property, display desired info on PatientView
-            //var queue = _repo.Queue.FindByCondition(i => i.UserId == groupMember.Id).FirstOrDefault();
-            //if (queue != null)
-            //{
-            //    //queue.OwnerInitials = string.Empty;
-            //    //_repo.Queue.Update(queue);
-            //    //_repo.Save();
-
-            //    var outputQueue = _mapper.Map<Queue>(queue);
-            //    Clients.Group(queue.RoomNo.ToString()).SendAsync("Refresh", groupMember.GroupName);
-            //    //Clients.Group(queue.RoomNo.ToString()).SendAsync("ReceiveQueueNo", groupMember.Id, outputQueue.QueueNoMessage);
-            //    //Clients.Group(queue.RoomNo.ToString()).SendAsync("ReceiveAdditionalInfo", groupMember.Id, string.Empty);
-            //}
-
+            
             //if group member changed roomNo reload patient view
             if(groupMember.Id != null && !_queueService.CheckRoomSubordination(groupMember.Id, memberRoomNo))
             {
