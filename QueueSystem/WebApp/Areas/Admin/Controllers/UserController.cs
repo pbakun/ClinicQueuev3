@@ -8,10 +8,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Interfaces;
 using WebApp.Models;
+using WebApp.Utility;
 
 namespace WebApp.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = StaticDetails.AdminUser)]
     [Area("Admin")]
     public class UserController : Controller
     {
@@ -28,8 +29,10 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            var role = claimsIdentity.FindFirst(ClaimTypes.Role);
 
             var users = _repo.User.FindAll().ToList();
+
             var outputUsers = _mapper.Map <List<User>> (users);
             return View(outputUsers);
         }

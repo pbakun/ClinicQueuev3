@@ -18,5 +18,9 @@ namespace WebApp.Utility
         public const string PatientUser = "Patient";
 
         public const string DoctorNamePrefix = "Lek. med. ";
+
+        public const int PatientViewNotificationAfterDoctorDisconnectedDelay = 30000;
+
+        public const string QueueOccupiedMessage = "Kolejka w wybranym pokoju jest obecnie pod kontrolą innego użytkownika";
     }
 }

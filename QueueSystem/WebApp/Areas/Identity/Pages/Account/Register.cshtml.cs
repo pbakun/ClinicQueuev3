@@ -75,6 +75,8 @@ namespace WebApp.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            string role = Request.Form["rdUserRole"].ToString();
+
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
@@ -101,7 +103,21 @@ namespace WebApp.Areas.Identity.Pages.Account
                     if (!await _roleManager.RoleExistsAsync(StaticDetails.PatientUser))
                         await _roleManager.CreateAsync(new IdentityRole(StaticDetails.PatientUser));
 
-                    await _userManager.AddToRoleAsync(user, StaticDetails.AdminUser);
+                    switch (role)
+                    {
+                        case StaticDetails.AdminUser:
+                            await _userManager.AddToRoleAsync(user, StaticDetails.AdminUser);
+                            break;
+                        case StaticDetails.DoctorUser:
+                            await _userManager.AddToRoleAsync(user, StaticDetails.DoctorUser);
+                            break;
+                        case StaticDetails.NurseUser:
+                            await _userManager.AddToRoleAsync(user, StaticDetails.NurseUser);
+                            break;
+                        default:
+                            await _userManager.AddToRoleAsync(user, StaticDetails.PatientUser);
+                            return LocalRedirect(returnUrl);
+                    }
 
                     _logger.LogInformation("User created a new account with password.");
 

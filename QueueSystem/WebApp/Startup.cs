@@ -58,6 +58,7 @@ namespace WebApp
                 config.Password.RequiredUniqueChars = 0;
                 config.Password.RequireUppercase = false;
             })
+                .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddDefaultTokenProviders()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<RepositoryContext>(); //would be best to add this in ServiceExtensions class in Repository library

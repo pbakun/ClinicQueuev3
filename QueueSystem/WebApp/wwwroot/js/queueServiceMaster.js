@@ -14,6 +14,10 @@ connection.on("ReceiveAdditionalInfo", function (id, message) {
     document.getElementById("additionalInfo").value = message;
 });
 
+connection.on("NotifyQueueOccupied", function (message) {
+    document.getElementById("serverMessage").innerHTML = message;
+});
+
 connection.start().then(function(){
     connection.invoke("RegisterDoctor", id, roomNo).catch(function (err) {
         return console.error(err.toString());
@@ -82,4 +86,5 @@ document.getElementById("ClearAdditionalMessage").addEventListener("click", func
     });
     event.preventDefault();
 });
+
 

@@ -10,10 +10,11 @@ using Repository.Interfaces;
 using WebApp.Models;
 using WebApp.Models.ViewModel;
 using WebApp.ServiceLogic;
+using WebApp.Utility;
 
 namespace WebApp.Areas.Doctor.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = StaticDetails.AdminUser + "," + StaticDetails.DoctorUser)]
     [Area("Doctor")]
     public class DoctorController : Controller
     {
