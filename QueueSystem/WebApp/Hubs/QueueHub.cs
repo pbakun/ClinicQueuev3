@@ -1,21 +1,34 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.SignalR;
+using Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApp.Data;
+using WebApp.Helpers;
+using WebApp.Models;
+using WebApp.ServiceLogic;
+using WebApp.Utility;
 
 namespace WebApp.Hubs
 {
     public class QueueHub : Hub
     {
         private static List<HubUser> _connectedUsers = new List<HubUser>();
+        private static List<HubUser> _waitingUsers = new List<HubUser>();
 
-        private readonly ApplicationDbContext _db;
+        private readonly IRepositoryWrapper _repo;
+        private readonly IQueueService _queueService;
+        //hubContext for sending messages to clients from long-running processes (like Timer)
+        private readonly IHubContext<QueueHub> _hubContext;
 
-        public QueueHub(ApplicationDbContext queueDb)
+        private DoctorDisconnectedTimer _timer;
+
+        public QueueHub(IRepositoryWrapper repo, IQueueService queueService, IHubContext<QueueHub> hubContext)
         {
-            _db = queueDb;
+            _repo = repo;
+            _queueService = queueService;
+            _hubContext = hubContext;
         }
         public async Task RegisterDoctor(string userId, int roomNo)
         {
@@ -25,14 +38,37 @@ namespace WebApp.Hubs
                 GroupName = roomNo.ToString()
             };
 
-            await Groups.AddToGroupAsync(newUser.ConnectionId, newUser.GroupName);
+            var userInControl = _connectedUsers.Where(m => m.Id != null).FirstOrDefault();
+            if(userInControl == null)
+            {
+                await Groups.AddToGroupAsync(newUser.ConnectionId, newUser.GroupName);
 
-            if (!_connectedUsers.Contains(newUser))
-                _connectedUsers.Add(newUser);
+                var user = _repo.User.FindByCondition(u => u.Id == userId).FirstOrDefault();
+
+                string doctorFullName = QueueHelper.GetDoctorFullName(user);
+
+                await Clients.Group(roomNo.ToString()).SendAsync("ReceiveDoctorFullName", userId, doctorFullName);
+
+                var queue = _queueService.FindByUserId(userId);
+
+                await Clients.Group(roomNo.ToString()).SendAsync("ReceiveQueueNo", userId, queue.QueueNoMessage);
+                await Clients.Group(roomNo.ToString()).SendAsync("ReceiveAdditionalInfo", userId, queue.AdditionalMessage);
+
+                if (!_connectedUsers.Contains(newUser))
+                    _connectedUsers.Add(newUser);
+            }
+            else
+            {
+                if (!_waitingUsers.Contains(newUser))
+                    _waitingUsers.Add(newUser);
+
+                await Clients.Caller.SendAsync("NotifyQueueOccupied", StaticDetails.QueueOccupiedMessage);
+            }
+
         }
 
         public async Task RegisterPatientView(int roomNo)
-        {   //todo
+        {   
             var newUser = new HubUser
             {
                 ConnectionId = Context.ConnectionId,
@@ -50,62 +86,62 @@ namespace WebApp.Hubs
         {
             string connectionString = Context.ConnectionId;
             var groupMember = _connectedUsers.Where(c => c.ConnectionId == Context.ConnectionId).FirstOrDefault();
-
-            //add some kind of erasing userId from his queue, delete queue Owner property, display desired info on PatientView
-            var queue = _db.Queue.Where(i => i.UserId == groupMember.Id).FirstOrDefault();
-            if (queue != null)
+            //if disconnecting user was not connected to any hub group (group was occupied when user was connecting)
+            if(groupMember == null)
             {
-                queue.OwnerInitials = string.Empty;
-                _db.SaveChanges();
+                var member = _waitingUsers.Where(c => c.ConnectionId == Context.ConnectionId).FirstOrDefault();
+                _waitingUsers.Remove(member);
+                return base.OnDisconnectedAsync(exception);
+            }
+
+            int memberRoomNo = Convert.ToInt32(groupMember.GroupName);
+
+            //if group member changed roomNo reload patient view
+            if (groupMember.Id != null && !_queueService.CheckRoomSubordination(groupMember.Id, memberRoomNo))
+            {
+                Clients.Group(groupMember.GroupName).SendAsync("Refresh", groupMember.GroupName);
+            }
+            else if (groupMember.Id != null)
+            {
+                //if Doctor disconnected start timer and send necessery info to Patient View after
+                _timer = new DoctorDisconnectedTimer(groupMember.GroupName, StaticDetails.PatientViewNotificationAfterDoctorDisconnectedDelay);
+                _timer.TimerFinished += Timer_TimerFinished;
             }
             
-
             _connectedUsers.Remove(groupMember);
             Groups.RemoveFromGroupAsync(connectionString, groupMember.GroupName);
 
             return base.OnDisconnectedAsync(exception);
         }
 
+        public void Timer_TimerFinished(object sender, EventArgs e)
+        {
+            var roomNo = sender as String;
+            _hubContext.Clients.Group(roomNo).SendAsync("Refresh", roomNo);
+            _timer.Dispose();
+        }
+
         public async Task NewQueueNo(string userId, int queueNo, int roomNo)
         {
-            var queue = _db.Queue.Where(i => i.UserId == userId).FirstOrDefault();
-            if(queueNo > 0)
+            var hubUser = _connectedUsers.Where(u => u.Id == userId).FirstOrDefault();
+            if(hubUser != null)
             {
-                queue.QueueNo = queueNo;
-                queue.IsBreak = false;
-                queue.IsSpecial = false;
-            }
-            else if(queueNo == -1 && queue.IsBreak == false)
-            {
-                queue.IsBreak = true;
-            }
-            else if(queueNo == -2 && queue.IsSpecial == false)
-            {
-                queue.IsSpecial = true;
-            }
-            else
-            {
-                queue.IsBreak = false;
-                queue.IsSpecial = false;
-            }
-            
-            queue.Timestamp = DateTime.UtcNow;
-            await _db.SaveChangesAsync();
+                Queue outputQueue = await _queueService.NewQueueNo(userId, queueNo);
 
-            await Clients.Group(roomNo.ToString()).SendAsync("ReceiveQueueNo", userId, queue.QueueNoMessage);
+                await Clients.Group(roomNo.ToString()).SendAsync("ReceiveQueueNo", userId, outputQueue.QueueNoMessage);
+            }
         }
 
         public async Task NewAdditionalInfo(string userId, int roomNo, string message)
         {
-            var queue = _db.Queue.Where(i => i.UserId == userId).FirstOrDefault();
-            if (message.Length > 0)
-                queue.AdditionalMessage = message;
-            else queue.AdditionalMessage = string.Empty;
+            var hubUser = _connectedUsers.Where(u => u.Id == userId).FirstOrDefault();
+            if (hubUser != null)
+            {
+                Queue outputQueue = await _queueService.NewAdditionalInfo(userId, message);
 
-            queue.Timestamp = DateTime.UtcNow;
-            await _db.SaveChangesAsync();
-
-            await Clients.Group(roomNo.ToString()).SendAsync("ReceiveAdditionalInfo", userId, queue.AdditionalMessage);
+                await Clients.Group(roomNo.ToString()).SendAsync("ReceiveAdditionalInfo", userId, outputQueue.AdditionalMessage);
+            }
+            
         }
     }
 
@@ -114,7 +150,6 @@ namespace WebApp.Hubs
         public string Id { get; set; }
         public string ConnectionId { get; set; }
         public IClientProxy Client { get; set; }
-
         public string GroupName { get; set; }
     }
 }

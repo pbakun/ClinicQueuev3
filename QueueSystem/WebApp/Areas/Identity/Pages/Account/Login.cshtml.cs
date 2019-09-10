@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using WebApp.Data;
+using Repository.Interfaces;
 
 namespace WebApp.Areas.Identity.Pages.Account
 {
@@ -18,13 +18,13 @@ namespace WebApp.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-        private readonly ApplicationDbContext _db;
+        private readonly IRepositoryWrapper _repo;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, ApplicationDbContext db)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, IRepositoryWrapper repo)
         {
             _signInManager = signInManager;
             _logger = logger;
-            _db = db;
+            _repo = repo;
         }
 
         [BindProperty]

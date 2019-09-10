@@ -1,4 +1,4 @@
-﻿@model WebApp.Models.Queue
+﻿@model WebApp.Models.ViewModel.PatientViewModel
 @{
     ViewData["Title"] = "System Kolejkowy";
 }
@@ -16,7 +16,7 @@
     <div class="row">
        
         <div class="container">
-            <div class="text-secondary text-center font-weight-bolder" style="font-size: 40px">Lek. med. Aleksandra Kowal</div>
+            <div class="text-secondary text-center font-weight-bolder" style="font-size: 40px" id="DoctorFullName">@Model.DoctorFullName</div>
         </div>
         <div class="container">
             <div class="text-dark text-center font-weight-light" style="font-size: 250px" id="QueueNo">@Model.QueueNoMessage</div>
@@ -34,7 +34,7 @@
 
     <footer class="border-top footer fixed-bottom">
         <div class="container">
-            <div class="text-info" id="additionalInfo">@Model.AdditionalMessage</div>
+            <div class="text-info" id="additionalInfo">@Model.QueueAdditionalInfo</div>
         </div>
     </footer>
 </div>

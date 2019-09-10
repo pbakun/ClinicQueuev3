@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
+using Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApp.Data;
 using WebApp.Hubs;
+using WebApp.Models;
+using WebApp.ServiceLogic;
 
 namespace WebApp.BackgroundServices.Tasks
 {
@@ -16,30 +19,35 @@ namespace WebApp.BackgroundServices.Tasks
 
         private IHubContext<QueueHub> _hubContext;
         private readonly IServiceScopeFactory _scopeFactory;
+        private readonly IMapper _mapper;
+        
 
-        public ResetQueue(IServiceScopeFactory serviceScopeFactory, IHubContext<QueueHub> hubContext) : base(serviceScopeFactory)
+        public ResetQueue(IServiceScopeFactory serviceScopeFactory, IHubContext<QueueHub> hubContext, IMapper mapper) : base(serviceScopeFactory)
         {
             _hubContext = hubContext;
             _scopeFactory = serviceScopeFactory;
+            _mapper = mapper;
         }
 
         public override Task ProcessInScope(IServiceProvider serviceProvider)
         {
             using(var scope = _scopeFactory.CreateScope())
             {
-                var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                var repo = scope.ServiceProvider.GetRequiredService<IRepositoryWrapper>();
 
-                var queues = db.Queue.ToList();
+                var queues = repo.Queue.FindAll();
 
                 foreach (var queue in queues)
                 {
                     queue.QueueNo = 1;
-                    _hubContext.Clients.Groups(queue.RoomNo.ToString()).SendAsync("ResetQueue", queue.QueueNoMessage);
+                    repo.Queue.Update(queue);
+                    var outputQueue = _mapper.Map<Queue>(queue);
+                    _hubContext.Clients.Groups(queue.RoomNo.ToString()).SendAsync("ResetQueue", outputQueue.QueueNoMessage);
                 }
-                db.SaveChanges();
+                //repo.Queue.UpdateList(queues);
+                repo.Save();
+                Console.WriteLine("Queues reseted to 1");
             }
-
-            //_hubContext.Clients.All.SendAsync("ResetQueue", "PB1");
 
             return Task.CompletedTask;
         }

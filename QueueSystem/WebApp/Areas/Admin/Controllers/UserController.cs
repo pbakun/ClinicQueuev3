@@ -3,31 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebApp.Data;
+using Repository.Interfaces;
+using WebApp.Models;
+using WebApp.Utility;
 
 namespace WebApp.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = StaticDetails.AdminUser)]
     [Area("Admin")]
     public class UserController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IRepositoryWrapper _repo;
+        private readonly IMapper _mapper;
 
-        public UserController(ApplicationDbContext db)
+        public UserController(IRepositoryWrapper repo, IMapper mapper)
         {
-            _db = db;
+            _repo = repo;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            var role = claimsIdentity.FindFirst(ClaimTypes.Role);
 
-            var users = _db.User.ToList();
+            var users = _repo.User.FindAll().ToList();
 
-            return View(users);
+            var outputUsers = _mapper.Map <List<User>> (users);
+            return View(outputUsers);
         }
     }
 }

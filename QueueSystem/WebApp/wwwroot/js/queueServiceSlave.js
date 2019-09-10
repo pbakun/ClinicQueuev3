@@ -7,10 +7,6 @@ var pathElements = window.location.pathname.split('/');
 var roomNo = pathElements[pathElements.length - 1];
 
 connection.on("ReceiveQueueNo", function (user, message) {
-    console.log(Date.now());
-    console.log(user);
-    console.log(message);
-    console.log(window.location.pathname);
     document.getElementById("QueueNo").textContent = message;
 });
 
@@ -21,6 +17,16 @@ connection.on("ReceiveAdditionalInfo", function (id, message) {
 connection.on("ResetQueue", function (message) {
     document.getElementById("QueueNo").textContent = message;
     console.log(message);
+});
+
+connection.on("Refresh", function (roomNo) {
+    console.log("refresh");
+    location.reload();
+});
+
+connection.on("ReceiveDoctorFullName", function (user, message) {
+    console.log(message);
+    document.getElementById("DoctorFullName").textContent = message;
 });
 
 connection.start().then(function () {
