@@ -16,11 +16,6 @@
     <None Remove="Areas\Admin\Models\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="Migrations\20190904130217_QueueDataTable.cs" />
-    <Compile Remove="Migrations\20190904130217_QueueDataTable.Designer.cs" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
