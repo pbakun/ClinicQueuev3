@@ -20,6 +20,7 @@ namespace Entities.Models
         public DateTime Timestamp { get; set; }
         public string UserId { get; set; }
         public bool IsSpecial { get; set; }
+        public bool IsActive { get; set; }
 
     }
 }

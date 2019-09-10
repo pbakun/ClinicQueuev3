@@ -115,6 +115,7 @@ namespace WebApp.Areas.Identity.Pages.Account
                             await _userManager.AddToRoleAsync(user, StaticDetails.NurseUser);
                             break;
                         default:
+                            //await _userManager.AddToRoleAsync(user, StaticDetails.AdminUser);
                             await _userManager.AddToRoleAsync(user, StaticDetails.PatientUser);
                             return LocalRedirect(returnUrl);
                     }

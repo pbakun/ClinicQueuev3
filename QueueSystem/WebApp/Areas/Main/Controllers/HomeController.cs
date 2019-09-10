@@ -25,16 +25,7 @@ namespace WebApp.Areas.Main.Controllers
         {
             var bla = _db.User.FindAll();
             var queue = _db.Queue.FindAll();
-            //var user = _db.User.FindByCondition(u => u.UserName == "admin").FirstOrDefault();
-            //var queue1 = _db.Queue.FindByCondition(q => q.RoomNo == 12).FirstOrDefault();
-            //queue1.UserId = user.Id;
-            //_db.Queue.Update(queue1);
-            //foreach(var element in queue)
-            //{
-            //    if(element.QueueNo==0)
-            //        _db.Queue.Delete(element);
-            //}
-            //_db.SaveAsync();
+            
 
             return View();
         }

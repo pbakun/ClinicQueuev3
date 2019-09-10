@@ -40,7 +40,7 @@ namespace WebApp.ServiceLogic
         public Queue FindByRoomNo(int roomNo)
         {
             //returns queue with newest Timestamp
-            var queue = _repo.Queue.FindByCondition(r => r.RoomNo == roomNo).OrderBy(t => t.Timestamp).FirstOrDefault();
+            var queue = _repo.Queue.FindByCondition(r => r.RoomNo == roomNo).OrderByDescending(t => t.Timestamp).FirstOrDefault();
             
             Queue output = _mapper.Map<Queue>(queue);
 
