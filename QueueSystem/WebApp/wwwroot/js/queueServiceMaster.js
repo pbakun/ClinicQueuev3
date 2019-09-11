@@ -12,6 +12,15 @@ connection.on("ReceiveQueueNo", function (user, message) {
 
 connection.on("ReceiveAdditionalInfo", function (id, message) {
     document.getElementById("additionalInfo").value = message;
+    var elementClassList = document.getElementById("SendAdditionalMessage").classList;
+    if (message.length > 0) {
+        elementClassList.replace("btn-dark", "btn-success");
+    }
+    else {
+        elementClassList.replace("btn-success", "btn-dark");
+    }
+    
+    
 });
 
 connection.on("NotifyQueueOccupied", function (message) {

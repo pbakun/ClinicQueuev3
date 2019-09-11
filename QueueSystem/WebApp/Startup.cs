@@ -109,7 +109,7 @@ namespace WebApp
             {
                 routes.MapRoute(
                     name: "areas",
-                    template: "{area=Main}/{controller=Home}/{action=Index}/{id?}");
+                    template: "{area=Patient}/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

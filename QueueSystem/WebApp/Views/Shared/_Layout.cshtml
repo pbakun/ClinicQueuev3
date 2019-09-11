@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using WebApp.Utility
 
 <!DOCTYPE html>
 <html>
@@ -25,7 +26,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="Main" asp-controller="Home" asp-action="Index">
+                <a class="navbar-brand" asp-area="Patient" asp-controller="Home" asp-action="Index">
                     <img src="~/img/queue.png" style="height: 40px;" />
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -35,12 +36,22 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Doctor" asp-controller="Doctor" asp-action="Index">Doctor</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="Index">Users</a>
-                        </li>
+                        @if (User.IsInRole(StaticDetails.AdminUser) || User.IsInRole(StaticDetails.DoctorUser))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Doctor" asp-controller="Doctor" asp-action="Index">Doctor</a>
+                            </li>
+                        }
+                        @if (User.IsInRole(StaticDetails.AdminUser))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="Index">Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Settings" asp-action="Index">Settings</a>
+                            </li>
+                        }
+
 
                     </ul>
                 </div>
@@ -56,7 +67,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2019 - System Kolejkowy - <a asp-area="" asp-controller="Home" asp-action="Privacy">Pomoc</a>
+            &copy; 2019 - System Kolejkowy - <a asp-area="Patient" asp-controller="Home" asp-action="Privacy">Pomoc</a>
         </div>
     </footer>
 

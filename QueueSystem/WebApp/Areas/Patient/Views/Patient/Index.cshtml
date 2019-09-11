@@ -33,9 +33,10 @@
     
 
     <footer class="border-top footer fixed-bottom">
-        <div class="container">
-            <div class="text-info" id="additionalInfo">@Model.QueueAdditionalInfo</div>
-        </div>
+            <marquee  behavior="scroll" direction="left">
+                <p class="text-info" style="font-size: 20px" id="additionalInfo">
+                    @Model.QueueAdditionalInfo</p>
+            </marquee>
     </footer>
 </div>
 

@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Interfaces;
 using WebApp.Models;
 
-namespace WebApp.Areas.Main.Controllers
+namespace WebApp.Areas.Patient.Controllers
 {
-    [Area("Main")]
+    [Area("Patient")]
     public class HomeController : Controller
     {
 

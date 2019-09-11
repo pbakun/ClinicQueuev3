@@ -73,7 +73,7 @@
             <div class="row">
                 <div class="form-group col-6 offset-1">
                     <label for="additionalInfo">Dodatkowa informacja:</label>
-                    <textarea class="form-control" id="additionalInfo" rows="3">@Model.Queue.AdditionalMessage</textarea>
+                    <textarea class="form-control" id="additionalInfo" rows="3" oninput="textAreaChanged()">@Model.Queue.AdditionalMessage</textarea>
 
                 </div>
                 <div class="row">
@@ -110,6 +110,11 @@
     });
 
     document.getElementById("RoomSelection").value = roomNo;
+
+    function textAreaChanged() {
+        var elementClassList = document.getElementById("SendAdditionalMessage").classList;
+        elementClassList.replace("btn-success", "btn-dark");
+    }
 
 </script>
 

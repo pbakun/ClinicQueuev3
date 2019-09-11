@@ -13433,25 +13433,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pbakun\\.nuget\\packages\\": {},
+    "C:\\Users\\Dell\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
+      "projectUniqueName": "c:\\_Kod\\ClinicQueuev3\\QueueSystem\\WebApp\\WebApp.csproj",
       "projectName": "WebApp",
-      "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
-      "packagesPath": "C:\\Users\\pbakun\\.nuget\\packages\\",
-      "outputPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\obj\\",
+      "projectPath": "c:\\_Kod\\ClinicQueuev3\\QueueSystem\\WebApp\\WebApp.csproj",
+      "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
+      "outputPath": "c:\\_Kod\\ClinicQueuev3\\QueueSystem\\WebApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\pbakun\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -13465,8 +13465,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj": {
-              "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj"
+            "c:\\_Kod\\ClinicQueuev3\\QueueSystem\\Repository\\Repository.csproj": {
+              "projectPath": "c:\\_Kod\\ClinicQueuev3\\QueueSystem\\Repository\\Repository.csproj"
             }
           }
         }
