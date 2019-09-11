@@ -11,12 +11,12 @@ namespace WebApp.Hubs
     {
         public System.Timers.Timer _timer;
         public event EventHandler TimerFinished;
-        private string _groupName;
+        private HubUser _groupMember;
         private IHubContext<QueueHub> _hubContext;
         
-        public DoctorDisconnectedTimer(string groupName, int delay)
+        public DoctorDisconnectedTimer(HubUser groupMember, int delay)
         {
-            _groupName = groupName;
+            _groupMember = groupMember;
             _timer = new System.Timers.Timer(delay);
             _timer.Start();
             _timer.Elapsed += _timer_Elapsed;
@@ -32,7 +32,7 @@ namespace WebApp.Hubs
         {
             if (TimerFinished != null)
             {
-                TimerFinished.Invoke(_groupName, new EventArgs());
+                TimerFinished.Invoke(_groupMember, new EventArgs());
             }
         }
 

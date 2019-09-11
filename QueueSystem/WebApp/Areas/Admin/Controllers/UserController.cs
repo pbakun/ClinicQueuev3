@@ -36,5 +36,41 @@ namespace WebApp.Areas.Admin.Controllers
             var outputUsers = _mapper.Map <List<User>> (users);
             return View(outputUsers);
         }
+
+        public async Task<IActionResult> Lock(string id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var user = _repo.User.FindByCondition(u => u.Id == id).FirstOrDefault();
+
+            if (user == null)
+                return NotFound();
+
+            user.LockoutEnd = DateTime.Now.AddYears(1000);
+
+            _repo.User.Update(user);
+            await _repo.SaveAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> UnLock(string id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var user = _repo.User.FindByCondition(u => u.Id == id).FirstOrDefault();
+
+            if (user == null)
+                return NotFound();
+
+            user.LockoutEnd = DateTime.Now;
+
+            _repo.User.Update(user);
+            await _repo.SaveAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

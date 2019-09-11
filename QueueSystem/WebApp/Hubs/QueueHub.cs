@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.SignalR;
 using Repository.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -19,6 +18,7 @@ namespace WebApp.Hubs
 
         private readonly IRepositoryWrapper _repo;
         private readonly IQueueService _queueService;
+
         //hubContext for sending messages to clients from long-running processes (like Timer)
         private readonly IHubContext<QueueHub> _hubContext;
 
@@ -51,6 +51,8 @@ namespace WebApp.Hubs
 
                 var queue = _queueService.FindByUserId(userId);
 
+                _queueService.SetQueueActive(queue);
+
                 await Clients.Group(roomNo.ToString()).SendAsync("ReceiveQueueNo", userId, queue.QueueNoMessage);
                 await Clients.Group(roomNo.ToString()).SendAsync("ReceiveAdditionalInfo", userId, queue.AdditionalMessage);
 
@@ -64,7 +66,6 @@ namespace WebApp.Hubs
 
                 await Clients.Caller.SendAsync("NotifyQueueOccupied", StaticDetails.QueueOccupiedMessage);
             }
-
         }
 
         public async Task RegisterPatientView(int roomNo)
@@ -99,12 +100,13 @@ namespace WebApp.Hubs
             //if group member changed roomNo reload patient view
             if (groupMember.Id != null && !_queueService.CheckRoomSubordination(groupMember.Id, memberRoomNo))
             {
+                _queueService.SetQueueInActive(groupMember.Id);
                 Clients.Group(groupMember.GroupName).SendAsync("Refresh", groupMember.GroupName);
             }
             else if (groupMember.Id != null)
             {
                 //if Doctor disconnected start timer and send necessery info to Patient View after
-                _timer = new DoctorDisconnectedTimer(groupMember.GroupName, StaticDetails.PatientViewNotificationAfterDoctorDisconnectedDelay);
+                _timer = new DoctorDisconnectedTimer(groupMember, StaticDetails.PatientViewNotificationAfterDoctorDisconnectedDelay);
                 _timer.TimerFinished += Timer_TimerFinished;
             }
             
@@ -116,15 +118,19 @@ namespace WebApp.Hubs
 
         public void Timer_TimerFinished(object sender, EventArgs e)
         {
-            var roomNo = sender as String;
-            _hubContext.Clients.Group(roomNo).SendAsync("Refresh", roomNo);
+            var groupMember = sender as HubUser;
+            if (_connectedUsers.Where(i => i.Id == groupMember.Id).FirstOrDefault() == null)
+            {
+                _queueService.SetQueueInActive(groupMember.Id);
+                _hubContext.Clients.Group(groupMember.GroupName).SendAsync("Refresh", groupMember.GroupName);
+            }
             _timer.Dispose();
         }
 
         public async Task NewQueueNo(string userId, int queueNo, int roomNo)
         {
             var hubUser = _connectedUsers.Where(u => u.Id == userId).FirstOrDefault();
-            if(hubUser != null)
+            if (hubUser != null)
             {
                 Queue outputQueue = await _queueService.NewQueueNo(userId, queueNo);
 
@@ -141,7 +147,6 @@ namespace WebApp.Hubs
 
                 await Clients.Group(roomNo.ToString()).SendAsync("ReceiveAdditionalInfo", userId, outputQueue.AdditionalMessage);
             }
-            
         }
     }
 

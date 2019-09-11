@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using Repository.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,13 @@ namespace WebApp.ServiceLogic
     {
         private readonly IRepositoryWrapper _repo;
         private readonly IMapper _mapper;
+        private readonly IServiceScopeFactory _scopeFactory;
 
-        public QueueService(IRepositoryWrapper repo, IMapper mapper)
+        public QueueService(IRepositoryWrapper repo, IMapper mapper, IServiceScopeFactory serviceScopeFactory)
         {
             _repo = repo;
             _mapper = mapper;
+            _scopeFactory = serviceScopeFactory;
         }
 
         #region Implmenting interface
@@ -40,8 +43,8 @@ namespace WebApp.ServiceLogic
         public Queue FindByRoomNo(int roomNo)
         {
             //returns queue with newest Timestamp
-            var queue = _repo.Queue.FindByCondition(r => r.RoomNo == roomNo).OrderByDescending(t => t.Timestamp).FirstOrDefault();
-            
+            var queue = _repo.Queue.FindByCondition(r => r.RoomNo == roomNo && r.IsActive).OrderByDescending(t => t.Timestamp).FirstOrDefault();
+
             Queue output = _mapper.Map<Queue>(queue);
 
             return output;
@@ -144,6 +147,32 @@ namespace WebApp.ServiceLogic
                 return true;
 
             return false;
+        }
+
+        public void SetQueueActive(Entities.Models.Queue queue)
+        {//can I do something like this?
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var repo = scope.ServiceProvider.GetRequiredService<IRepositoryWrapper>();
+
+                queue.IsActive = true;
+
+                repo.Queue.Update(queue);
+                repo.Save();
+            }
+
+        }
+
+        public void SetQueueInActive(string userId)
+        {
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var repo = scope.ServiceProvider.GetRequiredService<IRepositoryWrapper>();
+                var queue = repo.Queue.FindByCondition(q => q.UserId == userId).FirstOrDefault();
+                queue.IsActive = false;
+                repo.Queue.Update(queue);
+                repo.Save();
+            }
         }
 
 
