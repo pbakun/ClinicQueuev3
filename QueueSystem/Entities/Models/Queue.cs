@@ -11,7 +11,6 @@ namespace Entities.Models
     {
         [Key]
         public int Id { get; set; }
-
         public int QueueNo { get; set; }
         public bool IsBreak { get; set; }
         public string AdditionalMessage { get; set; }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.Utility;
 
 namespace WebApp.Models.ViewModel
 {
@@ -12,7 +13,7 @@ namespace WebApp.Models.ViewModel
 
         public DoctorViewModel()
         {
-            AvailableRoomNo = new List<int> { 12, 13, 14};
+            AvailableRoomNo = StaticDetails.AvailableRoomNo;
         }
     }
 }

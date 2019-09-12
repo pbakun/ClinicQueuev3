@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,5 +23,7 @@ namespace WebApp.Utility
         public const int PatientViewNotificationAfterDoctorDisconnectedDelay = 30000;
 
         public const string QueueOccupiedMessage = "Kolejka w wybranym pokoju jest obecnie pod kontrolą innego użytkownika";
+
+        public static readonly List<int> AvailableRoomNo = new List<int> { 12, 13, 14 };
     }
 }

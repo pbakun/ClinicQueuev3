@@ -27,12 +27,8 @@ C:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\WebApp.dll
 C:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\WebApp.pdb
 C:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\WebApp.csproj.CopyComplete
 C:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Doctor\Views\Doctor\Index.g.cshtml.cs
-C:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Main\Views\Home\Index.g.cshtml.cs
-C:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Main\Views\Home\Privacy.g.cshtml.cs
 c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Doctor\Views\_ViewImports.g.cshtml.cs
 c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Doctor\Views\_ViewStart.g.cshtml.cs
-c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Main\Views\_ViewImports.g.cshtml.cs
-c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Main\Views\_ViewStart.g.cshtml.cs
 c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Patient\Views\Patient\Index.g.cshtml.cs
 c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Patient\Views\_ViewImports.g.cshtml.cs
 c:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Patient\Views\_ViewStart.g.cshtml.cs
@@ -158,3 +154,8 @@ c:\_Kod\ClinicQueuev3\QueueSystem\WebApp\bin\Debug\netcoreapp2.2\Repository.pdb
 c:\_Kod\ClinicQueuev3\QueueSystem\WebApp\bin\Debug\netcoreapp2.2\Entities.pdb
 c:\_Kod\ClinicQueuev3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Patient\Views\Home\Index.g.cshtml.cs
 c:\_Kod\ClinicQueuev3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Patient\Views\Home\Privacy.g.cshtml.cs
+C:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Patient\Views\Home\Index.g.cshtml.cs
+C:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Patient\Views\Home\Privacy.g.cshtml.cs
+C:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Admin\Views\Rooms\Index.g.cshtml.cs
+C:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Admin\Views\Rooms\Create.g.cshtml.cs
+C:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CreateNewRoom.g.cshtml.cs

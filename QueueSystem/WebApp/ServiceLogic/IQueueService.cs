@@ -14,6 +14,7 @@ namespace WebApp.ServiceLogic
         Queue ResetQueues();
         Queue FindByUserId(string userId);
         Queue FindByRoomNo(int roomNo);
+        List<Queue> FindAll();
         Queue CreateQueue(string userId);
         bool CheckRoomSubordination(string userId, int roomNo);
         void SetQueueActive(Entities.Models.Queue queueId);

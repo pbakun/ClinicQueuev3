@@ -175,6 +175,14 @@ namespace WebApp.ServiceLogic
             }
         }
 
+        public List<Queue> FindAll()
+        {
+            var queues = _repo.Queue.FindAll().ToList();
+
+            var output = _mapper.Map<List<Queue>>(queues);
+            return output;
+        }
+
 
         #endregion
 

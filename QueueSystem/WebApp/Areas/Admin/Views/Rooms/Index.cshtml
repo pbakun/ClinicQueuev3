@@ -1,0 +1,140 @@
+﻿@model IEnumerable<WebApp.Models.ViewModel.RoomsViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<div class=" backgroundWhite">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-info">Lista pokoji</h2>
+        </div>
+        <div class="col-6 text-right">
+            <button type="submit" class="btn btn-info anchorCreate" data-toggle="model"><i class="fas fa-plus"></i> &nbsp; Dodaj pokój</button>
+        </div>
+    </div>
+    <br />
+    <div>
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th>
+                        Pokój
+                    </th>
+                    <th>
+                        Aktywny
+                    </th>
+                    <th>
+                        Użytkownik
+                    </th>
+                    <th>
+                        Nr kolejki
+                    </th>
+                    <th></th>
+
+                </tr>
+                @foreach (var item in Model)
+                {
+                    if (item.Queue != null && item.UserName.Length > 0)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.RoomNo)
+                            </td>
+                            <td>
+                                @if (item.Queue.IsActive)
+                                {
+                                    <i class="fas fa-check" style="color: #00FF00;"></i>
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.UserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Queue.QueueNoMessage)
+                            </td>
+                            <td>
+                                <i class="fas fa-info-circle"></i>
+                            </td>
+
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.RoomNo)
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    }
+
+                }
+            </table>
+        }
+        else
+        {
+            <p>Brak użytkowników</p>
+        }
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog-centered modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info justify-content-center">
+                <h5 class="modal-title text-light">Dodaj Pokój</h5>
+            </div>
+            <div class="modal-body justify-content-center" id="myModalContent">
+                <form method="post" asp-area="Admin" asp-controller="Rooms" asp-action="Create">
+                    <div class="container row">
+                        <div class="col-4">
+                            <label class="col-form-label">Nowy pokój:</label>
+                        </div>
+                        <div class="col-4">
+                            <input class="form-control" type="number" name="roomNo" />
+                        </div>
+                        <div class="col-2">
+                            <button type="submit" class="btn btn-success">Dodaj!</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        var PostBackURL = '/Admin/Rooms/Create';
+
+        $(function () {
+            $(".anchorCreate").click(function () {
+
+                $.ajax({
+                    type: "GET",
+                    url: PostBackURL,
+                    contentType: "application/json; charset=utf-8",
+                    cache: false,
+                    datatype: "json",
+                    success: function () {
+                        $('#myModalContent').html();
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed");
+                    }
+                });
+            });
+        });
+    </script>
+}
