@@ -1,0 +1,74 @@
+﻿@model IEnumerable<WebApp.Models.ViewModel.RoomsViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<div class=" backgroundWhite">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-info">Gabinet @Html.Raw(Model.FirstOrDefault().RoomNo)</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-action="Index" class="btn btn-info">Powrót</a>
+        </div>
+    </div>
+    <br />
+    <div>
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th>
+                        Pokój
+                    </th>
+                    <th>
+                        Aktywny
+                    </th>
+                    <th>
+                        Użytkownik
+                    </th>
+                    <th>
+                        Nr kolejki
+                    </th>
+                    <th>
+                        Ostatnia modyfikacja
+                    </th>
+
+                </tr>
+                @foreach (var item in Model)
+                {
+                        <tr>
+                            <td class="align-middle">
+                                @Html.DisplayFor(m => item.Queue.Id)
+                            </td>
+                            <td class="align-middle">
+                                @if (item.Queue.IsActive)
+                                {
+                                    <i class="fas fa-check" style="color: #00FF00;"></i>
+                                }
+                            </td>
+                            <td class="align-middle">
+                                @Html.DisplayFor(m => item.UserName)
+                            </td>
+                            <td class="align-middle">
+                                @Html.DisplayFor(m => item.Queue.QueueNoMessage)
+                            </td>
+                            <td class="align-middle">
+                                @Html.DisplayFor(m => item.Queue.Timestamp)
+                            </td>
+
+                        </tr>
+
+
+                }
+            </table>
+        }
+        else
+        {
+            <p>Brak użytkowników</p>
+        }
+    </div>
+</div>
+
+

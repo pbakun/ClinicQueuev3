@@ -67,5 +67,28 @@ namespace WebApp.Areas.Admin.Controllers
         {
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> Details(int roomNo)
+        {
+            var queues = _queueService.FindAll();
+
+            queues = queues.Where(q => q.RoomNo == roomNo).ToList();
+            if (queues != null)
+            {
+                foreach (var queue in queues)
+                {
+                    var roomVMElement = new RoomsViewModel()
+                    {
+                        Queue = queue,
+                        RoomNo = roomNo,
+                        UserName = _repo.User.FindByCondition(u => u.Id == queue.UserId).Select(u => u.UserName).FirstOrDefault()
+                    };
+                    RoomsVM.Add(roomVMElement);
+                }
+            }
+
+
+            return View(RoomsVM);
+        }
     }
 }

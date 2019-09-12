@@ -54,10 +54,16 @@
             @if (User.IsInRole(StaticDetails.AdminUser))
             {
                 <div class="col-1">
-                    <label asp-for="Input.RoomNo" class="col-form-label">Nr pokoju</label>
+                    <label asp-for="Input.RoomNo" class="col-form-label">Pokój</label>
                 </div>
                 <div class="col-5">
-                    <input asp-for="Input.RoomNo" class="form-control" />
+                    <select asp-for="Input.RoomNo" class="form-control" id="RoomSelection">
+                        <option disabled selected>Wybierz nr pokoju</option>
+                        @foreach (var item in Model.Input.AvailableRooms)
+                        {
+                            <option>@Html.DisplayFor(m => item)</option>
+                        }
+                    </select>
                 </div>
                 <span asp-validation-for="Input.RoomNo" class="text-danger"></span>
             }
@@ -68,7 +74,8 @@
                 </div>
                 <div class="col-5">
                     <select asp-for="Input.RoomNo" class="form-control" id="RoomSelection">
-                        @foreach (var item in Model.Input.AvailableRooms)
+                        <option disabled selected>Wybierz swojego lekarza</option>
+                        @foreach (var item in Model.Input.AvailableDoctors)
                         {
                             <option>@Html.DisplayFor(m => item)</option>
                         }

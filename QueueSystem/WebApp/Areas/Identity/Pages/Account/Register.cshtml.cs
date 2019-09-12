@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -67,15 +68,31 @@ namespace WebApp.Areas.Identity.Pages.Account
             public string LastName { get; set; }
             public int RoomNo { get; set; }
             public List<int> AvailableRooms { get; set; }
+            public List<string> AvailableDoctors { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
         {
+            var claimIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimIdentity.FindFirst(ClaimTypes.Role);
+
             ReturnUrl = returnUrl;
-            Input = new InputModel()
+            //to be changed to non hard-coded data
+            if(claim != null && claim.Value == StaticDetails.AdminUser)
             {
-                AvailableRooms = StaticDetails.AvailableRoomNo
-            };
+                Input = new InputModel()
+                {
+                    AvailableRooms = StaticDetails.AvailableRoomNo
+                };
+            }
+            else
+            {
+                Input = new InputModel()
+                {
+                    AvailableDoctors = new List<string> { "Piotr Bakun", "Ala Kowalska" }
+                };
+            }
+            
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)

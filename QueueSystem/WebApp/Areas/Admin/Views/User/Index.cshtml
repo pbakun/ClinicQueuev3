@@ -10,7 +10,7 @@
             <h2 class="text-info">Lista użytkowników</h2>
         </div>
         <div class="col-6 text-right">
-            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp; New Employee Registration</a>
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp; Rejestruj nowego użytkownika</a>
         </div>
     </div>
     <br />
@@ -34,16 +34,16 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
+                        <td class="align-middle">
                             @Html.DisplayFor(m => item.UserName)
                         </td>
-                        <td>
+                        <td class="align-middle">
                             @Html.DisplayFor(m => item.Email)
                         </td>
-                        <td>
+                        <td class="align-middle">
                             @Html.DisplayFor(m => item.RoomNo)
                         </td>
-                        <td>
+                        <td class="align-middle">
                             @if (item.LockoutEnd == null || item.LockoutEnd < DateTime.Now)
                             {
                                 <a class="btn btn-success text-white" asp-action="Lock" asp-route-id="@item.Id">

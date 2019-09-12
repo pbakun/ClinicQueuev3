@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Interfaces;
 using WebApp.Models;
@@ -13,18 +14,21 @@ namespace WebApp.Areas.Patient.Controllers
     public class HomeController : Controller
     {
 
-        private IRepositoryWrapper _db;
+        private readonly IRepositoryWrapper _repo;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public HomeController(IRepositoryWrapper db)
+        public HomeController(IRepositoryWrapper repo, IHostingEnvironment hostingEnvironment)
         {
-            _db = db;
+            _repo = repo;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public IActionResult Index()
         {
-            var bla = _db.User.FindAll();
-            var queue = _db.Queue.FindAll();
-            
+            var bla = _repo.User.FindAll();
+            var queue = _repo.Queue.FindAll();
+
+            string filepath = _hostingEnvironment.ContentRootPath;
 
             return View();
         }
