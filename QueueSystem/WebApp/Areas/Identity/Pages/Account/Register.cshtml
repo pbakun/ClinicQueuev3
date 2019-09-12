@@ -51,13 +51,32 @@
             <span asp-validation-for="Input.LastName" class="text-danger"></span>
         </div>
         <div class="form-group row">
-            <div class="col-1">
-                <label asp-for="Input.RoomNo" class="col-form-label">Nr pokoju</label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Input.RoomNo" class="form-control" />
-            </div>
-            <span asp-validation-for="Input.RoomNo" class="text-danger"></span>
+            @if (User.IsInRole(StaticDetails.AdminUser))
+            {
+                <div class="col-1">
+                    <label asp-for="Input.RoomNo" class="col-form-label">Nr pokoju</label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Input.RoomNo" class="form-control" />
+                </div>
+                <span asp-validation-for="Input.RoomNo" class="text-danger"></span>
+            }
+            else
+            {
+                <div class="col-1">
+                    <label asp-for="Input.RoomNo" class="col-form-label">Lekarz</label>
+                </div>
+                <div class="col-5">
+                    <select asp-for="Input.RoomNo" class="form-control" id="RoomSelection">
+                        @foreach (var item in Model.Input.AvailableRooms)
+                        {
+                            <option>@Html.DisplayFor(m => item)</option>
+                        }
+
+                    </select>
+                </div>
+                <span asp-validation-for="Input.RoomNo" class="text-danger"></span>
+            }
         </div>
         <div class="form-group row">
             <div class="col-1">

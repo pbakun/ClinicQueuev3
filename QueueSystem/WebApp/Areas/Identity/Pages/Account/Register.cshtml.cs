@@ -66,11 +66,16 @@ namespace WebApp.Areas.Identity.Pages.Account
             [Required]
             public string LastName { get; set; }
             public int RoomNo { get; set; }
+            public List<int> AvailableRooms { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
+            Input = new InputModel()
+            {
+                AvailableRooms = StaticDetails.AvailableRoomNo
+            };
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
