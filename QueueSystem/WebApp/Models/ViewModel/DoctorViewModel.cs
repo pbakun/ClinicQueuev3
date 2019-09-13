@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.BackgroundServices.Tasks;
 using WebApp.Utility;
 
 namespace WebApp.Models.ViewModel
@@ -13,7 +14,7 @@ namespace WebApp.Models.ViewModel
 
         public DoctorViewModel()
         {
-            AvailableRoomNo = StaticDetails.AvailableRoomNo;
+            AvailableRoomNo = SettingsHandler.ApplicationSettings.AvailableRooms;
         }
     }
 }

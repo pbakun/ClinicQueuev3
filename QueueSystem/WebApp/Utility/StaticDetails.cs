@@ -24,6 +24,6 @@ namespace WebApp.Utility
 
         public const string QueueOccupiedMessage = "Kolejka w wybranym pokoju jest obecnie pod kontrolą innego użytkownika";
 
-        public static readonly List<int> AvailableRoomNo = new List<int> { 12, 13, 14 };
+        //public static readonly List<int> AvailableRoomNo = new List<int> { 12, 13, 14 };
     }
 }

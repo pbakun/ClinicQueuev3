@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Interfaces;
+using WebApp.BackgroundServices.Tasks;
+using WebApp.Models;
 using WebApp.Models.ViewModel;
 using WebApp.ServiceLogic;
 using WebApp.Utility;
@@ -17,7 +19,7 @@ namespace WebApp.Areas.Admin.Controllers
     {
         private readonly IQueueService _queueService;
         private readonly IRepositoryWrapper _repo;
-
+        private readonly ApplicationSettings _appSettings = SettingsHandler.ApplicationSettings;
         [BindProperty]
         public List<RoomsViewModel> RoomsVM { get; set; }
 
@@ -32,7 +34,8 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var queues = _queueService.FindAll();
 
-            var availableRooms = StaticDetails.AvailableRoomNo;
+            var availableRooms = SettingsHandler.ApplicationSettings.AvailableRooms;
+            
             RoomsViewModel roomVMElement = new RoomsViewModel();
             foreach (var room in availableRooms)
             {
@@ -65,6 +68,12 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([FromForm] int roomNo)
         {
+            if (!_appSettings.AvailableRooms.Contains(roomNo))
+            {
+                _appSettings.AvailableRooms.Add(roomNo);
+                SettingsHandler.Settings.WriteAllSettings(_appSettings);
+            }
+
             return RedirectToAction(nameof(Index));
         }
 

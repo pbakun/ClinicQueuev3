@@ -66,6 +66,9 @@ namespace WebApp
             
             services.AddAutoMapper(typeof(MappingProfile));
 
+            services.AddSingleton<SettingsHandler>();
+            SettingsHandler.Settings.ReadSettings();
+
             services.AddScoped<IQueueService, QueueService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

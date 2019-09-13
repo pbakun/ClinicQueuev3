@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Interfaces;
+using WebApp.BackgroundServices.Tasks;
 using WebApp.Models;
 
 namespace WebApp.Areas.Patient.Controllers
@@ -28,7 +29,6 @@ namespace WebApp.Areas.Patient.Controllers
             var bla = _repo.User.FindAll();
             var queue = _repo.Queue.FindAll();
 
-            string filepath = _hostingEnvironment.ContentRootPath;
 
             return View();
         }
