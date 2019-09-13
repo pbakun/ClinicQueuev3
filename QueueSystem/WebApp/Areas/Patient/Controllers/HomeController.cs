@@ -16,12 +16,10 @@ namespace WebApp.Areas.Patient.Controllers
     {
 
         private readonly IRepositoryWrapper _repo;
-        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public HomeController(IRepositoryWrapper repo, IHostingEnvironment hostingEnvironment)
+        public HomeController(IRepositoryWrapper repo)
         {
             _repo = repo;
-            _hostingEnvironment = hostingEnvironment;
         }
 
         public IActionResult Index()
@@ -29,8 +27,9 @@ namespace WebApp.Areas.Patient.Controllers
             var bla = _repo.User.FindAll();
             var queue = _repo.Queue.FindAll();
 
+            var availableRooms = SettingsHandler.ApplicationSettings.AvailableRooms;
 
-            return View();
+            return View(availableRooms);
         }
 
         public IActionResult Privacy()

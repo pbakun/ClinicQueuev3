@@ -65,11 +65,11 @@ namespace WebApp
 
             
             services.AddAutoMapper(typeof(MappingProfile));
+            //all queues somehow needs to be set to inactive on app startup
+            services.AddScoped<IQueueService, QueueService>();
 
             services.AddSingleton<SettingsHandler>();
             SettingsHandler.Settings.ReadSettings();
-
-            services.AddScoped<IQueueService, QueueService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

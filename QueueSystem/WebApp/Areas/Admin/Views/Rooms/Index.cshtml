@@ -54,9 +54,12 @@
                             <td class="align-middle">
                                 @Html.DisplayFor(m => item.Queue.QueueNoMessage)
                             </td>
-                            <td class="align-middle">
+                            <td class="align-middle btn-group">
                                 <a class="btn btn-success" asp-action="Details" asp-route-roomNo="@item.RoomNo">
                                     <i class="fas fa-info-circle"></i>
+                                </a>
+                                <a class="btn btn-danger" asp-action="Delete" asp-route-roomNo="@item.RoomNo">
+                                    <i class="far fa-trash-alt"></i>
                                 </a>
                             </td>
 
@@ -68,13 +71,14 @@
                             <td class="align-middle">
                                 @Html.DisplayFor(m => item.RoomNo)
                             </td>
-                            <td class="align-middle">
+                            <td class="align-middle" colspan="3">
+                                Brak lekarza przypisanego do gabinetu
                             </td>
-                            <td class="align-middle">
-                            </td>
-                            <td class="align-middle">
-                            </td>
-                            <td class="align-middle">
+                            <td class="align-middle btn-group">
+                                
+                                <a class="btn btn-danger" asp-action="Delete" asp-route-roomNo="@item.RoomNo">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
                             </td>
                         </tr>
                     }

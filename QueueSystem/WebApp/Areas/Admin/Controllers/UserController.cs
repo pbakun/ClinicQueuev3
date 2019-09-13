@@ -42,6 +42,12 @@ namespace WebApp.Areas.Admin.Controllers
             if (id == null)
                 return NotFound();
 
+            var claimIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            if(id == claim.Value)
+                return RedirectToAction(nameof(Index));
+
             var user = _repo.User.FindByCondition(u => u.Id == id).FirstOrDefault();
 
             if (user == null)

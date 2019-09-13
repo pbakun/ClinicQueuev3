@@ -162,3 +162,4 @@ C:\_Kod\ClinicQueuev3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Adm
 C:\_Kod\ClinicQueuev3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CreateNewRoom.g.cshtml.cs
 C:\_Kod\ClinicQueuev3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Admin\Views\Rooms\Details.g.cshtml.cs
 C:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Admin\Views\Rooms\Details.g.cshtml.cs
+C:\_Moje\C#\Clinicv3\QueueSystem\WebApp\obj\Debug\netcoreapp2.2\Razor\Areas\Admin\Views\Settings\Index.g.cshtml.cs

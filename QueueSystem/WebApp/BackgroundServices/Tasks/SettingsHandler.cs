@@ -16,6 +16,7 @@ namespace WebApp.BackgroundServices.Tasks
         private static string path = Path.Combine(directory, "AppSettings.json");
 
         public static ApplicationSettings ApplicationSettings;
+        
 
         private static readonly SettingsHandler _settingsHandler = new SettingsHandler();
 

@@ -95,9 +95,15 @@ namespace WebApp.Areas.Admin.Controllers
                     RoomsVM.Add(roomVMElement);
                 }
             }
-
-
             return View(RoomsVM);
+        }
+
+        public async Task<IActionResult> Delete(int roomNo)
+        {
+            _appSettings.AvailableRooms.Remove(roomNo);
+            SettingsHandler.Settings.WriteAllSettings(_appSettings);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
