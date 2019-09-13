@@ -68,6 +68,8 @@ namespace WebApp
             //all queues somehow needs to be set to inactive on app startup
             services.AddScoped<IQueueService, QueueService>();
 
+            services.AddSingleton <Microsoft.Extensions.Hosting.IHostedService, StartupSetUp>();
+
             services.AddSingleton<SettingsHandler>();
             SettingsHandler.Settings.ReadSettings();
 

@@ -24,5 +24,15 @@ namespace WebApp.Areas.Admin.Controllers
 
             return View(ApplicationSettings);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Submit(ApplicationSettings settings)
+        {
+            ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay = settings.PatientViewNotificationAfterDoctorDisconnectedDelay;
+            SettingsHandler.Settings.WriteSettingsExceptRooms(ApplicationSettings);
+
+            return View("Index", ApplicationSettings);
+        }
     }
 }

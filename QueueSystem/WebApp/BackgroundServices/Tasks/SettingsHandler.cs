@@ -51,6 +51,20 @@ namespace WebApp.BackgroundServices.Tasks
 
         }
 
+        public void WriteSettingsExceptRooms(ApplicationSettings settings)
+        {
+            var rooms = ApplicationSettings.AvailableRooms;
+            ApplicationSettings = settings;
+            ApplicationSettings.AvailableRooms = rooms;
+
+            WriteAllSettings(ApplicationSettings);
+        }
+
+        public void WriteNewRoom(int roomNo)
+        {
+
+        }
+
 
         private void CheckFileExists()
         {

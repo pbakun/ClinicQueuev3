@@ -12,7 +12,6 @@ namespace WebApp.Hubs
         public System.Timers.Timer _timer;
         public event EventHandler TimerFinished;
         private HubUser _groupMember;
-        private IHubContext<QueueHub> _hubContext;
         
         public DoctorDisconnectedTimer(HubUser groupMember, int delay)
         {

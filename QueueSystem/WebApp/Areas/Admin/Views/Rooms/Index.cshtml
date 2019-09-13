@@ -54,11 +54,11 @@
                             <td class="align-middle">
                                 @Html.DisplayFor(m => item.Queue.QueueNoMessage)
                             </td>
-                            <td class="align-middle btn-group">
-                                <a class="btn btn-success" asp-action="Details" asp-route-roomNo="@item.RoomNo">
+                            <td class="btn-group d-flex justify-content-end">
+                                <a class="btn btn-success p-1" asp-action="Details" asp-route-roomNo="@item.RoomNo">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
-                                <a class="btn btn-danger" asp-action="Delete" asp-route-roomNo="@item.RoomNo">
+                                <a class="btn btn-danger p-1" asp-action="Delete" asp-route-roomNo="@item.RoomNo">
                                     <i class="far fa-trash-alt"></i>
                                 </a>
                             </td>
@@ -98,6 +98,10 @@
         <div class="modal-content">
             <div class="modal-header bg-info justify-content-center">
                 <h5 class="modal-title text-light">Dodaj Pokój</h5>
+                <div class="btn text-light align-content-center" id="myModalClose">
+                    &#9;
+                    <i class="fas fa-times"></i>
+                </div>
             </div>
             <div class="modal-body justify-content-center" id="myModalContent">
                 <form method="post" asp-area="Admin" asp-controller="Rooms" asp-action="Create">
@@ -133,13 +137,16 @@
                     cache: false,
                     datatype: "json",
                     success: function () {
-                        $('#myModalContent').html();
                         $('#myModal').modal('show');
                     },
                     error: function () {
                         alert("Dynamic content load failed");
                     }
                 });
+            });
+
+            $("#myModalClose").click(function () {
+                $('#myModal').modal('hide');
             });
         });
     </script>
