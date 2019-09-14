@@ -15,9 +15,12 @@
         <form method="post">
             <div class="row">
                 <div class="col-4">
-                    <label asp-for="@Model.PatientViewNotificationAfterDoctorDisconnectedDelay" class="form-check-inline">Czas do odłączenia użytkownika od kolejki:</label>
+                    <label asp-for="@Model.PatientViewNotificationAfterDoctorDisconnectedDelay" class="form-check-inline">
+                    Czas do odłączenia użytkownika od kolejki (min):
+                    </label>
                     <input type="number" asp-for="@Model.PatientViewNotificationAfterDoctorDisconnectedDelay" class=" form-control" value="@Model.PatientViewNotificationAfterDoctorDisconnectedDelay"/>
                 </div>
+                <span asp-validation-for="@Model.PatientViewNotificationAfterDoctorDisconnectedDelay"></span>
 
             </div>
             <div class="row">

@@ -173,7 +173,7 @@ namespace WebApp.Areas.Identity.Pages.Account
 
                     //return LocalRedirect(returnUrl);
 
-                    return RedirectToAction("Index", "Doctor", new { area = "Doctor" });
+                    return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)
                 {

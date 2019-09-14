@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.BackgroundServices.Tasks;
 using WebApp.Helpers;
 using WebApp.Models;
 using WebApp.ServiceLogic;
@@ -106,7 +107,7 @@ namespace WebApp.Hubs
             else if (groupMember.Id != null)
             {
                 //if Doctor disconnected start timer and send necessery info to Patient View after
-                _timer = new DoctorDisconnectedTimer(groupMember, StaticDetails.PatientViewNotificationAfterDoctorDisconnectedDelay);
+                _timer = new DoctorDisconnectedTimer(groupMember, SettingsHandler.ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay);
                 _timer.TimerFinished += Timer_TimerFinished;
             }
             

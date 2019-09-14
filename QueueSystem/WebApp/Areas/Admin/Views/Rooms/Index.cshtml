@@ -58,7 +58,7 @@
                                 <a class="btn btn-success p-1" asp-action="Details" asp-route-roomNo="@item.RoomNo">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
-                                <a class="btn btn-danger p-1" asp-action="Delete" asp-route-roomNo="@item.RoomNo">
+                                <a class="btn btn-danger p-1 anchorDelete" data="@item.RoomNo" data-toggle="model">
                                     <i class="far fa-trash-alt"></i>
                                 </a>
                             </td>
@@ -74,11 +74,11 @@
                             <td class="align-middle" colspan="3">
                                 Brak lekarza przypisanego do gabinetu
                             </td>
-                            <td class="align-middle btn-group">
-                                
-                                <a class="btn btn-danger" asp-action="Delete" asp-route-roomNo="@item.RoomNo">
+                            <td class="d-flex btn-group">
+                                @*asp-action="Delete" asp-route-roomNo="@item.RoomNo"*@
+                                <button class="btn btn-danger p-1 anchorDelete" onclick="AssignRoomNo(this)" data-room="@item.RoomNo" data-toggle="model">
                                     <i class="far fa-trash-alt"></i>
-                                </a>
+                                </button>
                             </td>
                         </tr>
                     }
@@ -98,10 +98,9 @@
         <div class="modal-content">
             <div class="modal-header bg-info justify-content-center">
                 <h5 class="modal-title text-light">Dodaj Pokój</h5>
-                <div class="btn text-light align-content-center" id="myModalClose">
-                    &#9;
+                <button class="btn text-light align-content-center" id="myModalClose">
                     <i class="fas fa-times"></i>
-                </div>
+                </button>
             </div>
             <div class="modal-body justify-content-center" id="myModalContent">
                 <form method="post" asp-area="Admin" asp-controller="Rooms" asp-action="Create">
@@ -122,11 +121,40 @@
     </div>
 </div>
 
+<div class="modal fade" id="myDeleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog-centered modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger justify-content-center">
+                <h5 class="modal-title text-light">Uwaga!</h5>
+            </div>
+            <div class="modal-body justify-content-center">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <label class="">Czy na pewno chcesz usunąć gabinet?</label>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-2">
+                                <button class="btn btn-outline-danger deleteConfirmed">Usuń</button>
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-outline-info" id="deleteClose">Cofnij</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section scripts {
     <script>
         var PostBackURL = '/Admin/Rooms/Create';
-
+        var PostDeleteURL = '/Admin/Rooms/Delete';
+        var roomToDelete;
         $(function () {
             $(".anchorCreate").click(function () {
 
@@ -148,6 +176,43 @@
             $("#myModalClose").click(function () {
                 $('#myModal').modal('hide');
             });
+
+            $(".anchorDelete").click(function () {
+                $('#myDeleteModal').modal('show');
+                
+            });
+
+            $("#deleteClose").click(function () {
+                $('#myDeleteModal').modal('hide');
+            });
+
+            $(".deleteConfirmed").click(function () {
+
+                $.ajax({
+                    type: "GET",
+                    url: PostDeleteURL,
+                    cache: false,
+                    contentType: "application/json",
+                    data: { "roomNo": roomToDelete },
+                    success: function () {
+                        location.reload();
+                    },
+                    error: function () {
+                        console.log("POST DELETE FAILED");
+                    }
+                        
+
+                });
+
+            });
+                
         });
+
+        function AssignRoomNo(element) {
+            var roomNo = $(element).data('room');
+
+            roomToDelete = roomNo;
+            console.log(roomToDelete);
+        }
     </script>
 }

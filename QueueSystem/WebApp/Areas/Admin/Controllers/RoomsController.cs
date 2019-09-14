@@ -70,8 +70,11 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if (!_appSettings.AvailableRooms.Contains(roomNo))
             {
-                _appSettings.AvailableRooms.Add(roomNo);
-                SettingsHandler.Settings.WriteAllSettings(_appSettings);
+                if(roomNo > 0)
+                {
+                    _appSettings.AvailableRooms.Add(roomNo);
+                    SettingsHandler.Settings.WriteAllSettings(_appSettings);
+                }
             }
 
             return RedirectToAction(nameof(Index));
@@ -81,11 +84,12 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var queues = _queueService.FindAll();
 
-            queues = queues.Where(q => q.RoomNo == roomNo).ToList();
+            queues = queues.Where(q => q.RoomNo == roomNo).OrderByDescending(q => q.Timestamp).ToList();
             if (queues != null)
             {
                 foreach (var queue in queues)
                 {
+                    queue.Timestamp = queue.Timestamp.ToLocalTime();
                     var roomVMElement = new RoomsViewModel()
                     {
                         Queue = queue,

@@ -22,6 +22,8 @@ namespace WebApp.Areas.Admin.Controllers
         {
             ApplicationSettings = SettingsHandler.ApplicationSettings;
 
+            ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay = FromMiliseconds(ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay);
+
             return View(ApplicationSettings);
         }
 
@@ -29,10 +31,25 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Submit(ApplicationSettings settings)
         {
-            ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay = settings.PatientViewNotificationAfterDoctorDisconnectedDelay;
-            SettingsHandler.Settings.WriteSettingsExceptRooms(ApplicationSettings);
+            if(settings.PatientViewNotificationAfterDoctorDisconnectedDelay < 1000)
+            {
+                ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay = ToMiliseconds(settings.PatientViewNotificationAfterDoctorDisconnectedDelay);
+                SettingsHandler.Settings.WriteSettingsExceptRooms(ApplicationSettings);
+                ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay = FromMiliseconds(ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay);
+
+            }
 
             return View("Index", ApplicationSettings);
+        }
+
+        private int ToMiliseconds(int minutes)
+        {
+            return minutes * 60 * 1000;
+        }
+        
+        private int FromMiliseconds(int miliseconds)
+        {
+            return miliseconds / (60 * 1000);
         }
     }
 }
