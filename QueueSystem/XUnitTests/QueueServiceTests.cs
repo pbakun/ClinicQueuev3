@@ -225,6 +225,7 @@ namespace XUnitTests
 
         [Theory]
         [InlineData(12, 15)]
+        [InlineData(13, 13)]
         public void ChangeUserRoomNo_Test(int newRoomNo, int oldRoomNo)
         {
             var data = new QueueData();

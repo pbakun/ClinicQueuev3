@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.BackgroundServices.Tasks;
@@ -14,14 +15,20 @@ namespace WebApp.Areas.Admin.Controllers
     [Area("Admin")]
     public class SettingsController : Controller
     {
+        private readonly IMapper _mapper;
+
         [BindProperty]
         public ApplicationSettings ApplicationSettings { get; set; }
 
+        public SettingsController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
 
         public IActionResult Index()
         {
-            ApplicationSettings = SettingsHandler.ApplicationSettings;
-
+            var ApplicationSettings = _mapper.Map<ApplicationSettings>(SettingsHandler.ApplicationSettings);
+            
             ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay = FromMiliseconds(ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay);
 
             return View(ApplicationSettings);
@@ -33,8 +40,9 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if(settings.PatientViewNotificationAfterDoctorDisconnectedDelay < 1000)
             {
-                ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay = ToMiliseconds(settings.PatientViewNotificationAfterDoctorDisconnectedDelay);
-                SettingsHandler.Settings.WriteSettingsExceptRooms(ApplicationSettings);
+                SettingsHandler.ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay = ToMiliseconds(settings.PatientViewNotificationAfterDoctorDisconnectedDelay);
+                SettingsHandler.Settings.WriteSettingsExceptRooms(SettingsHandler.ApplicationSettings);
+                ApplicationSettings = _mapper.Map<ApplicationSettings>(SettingsHandler.ApplicationSettings);
                 ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay = FromMiliseconds(ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay);
 
             }
