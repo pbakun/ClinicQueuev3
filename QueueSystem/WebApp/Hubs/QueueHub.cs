@@ -39,7 +39,7 @@ namespace WebApp.Hubs
                 GroupName = roomNo.ToString()
             };
 
-            var userInControl = _connectedUsers.Where(m => m.Id != null).FirstOrDefault();
+            var userInControl = _connectedUsers.Where(m => m.Id != null && m.GroupName == newUser.GroupName).FirstOrDefault();
             if(userInControl == null)
             {
                 await Groups.AddToGroupAsync(newUser.ConnectionId, newUser.GroupName);

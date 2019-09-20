@@ -27,6 +27,7 @@ namespace WebApp.BackgroundServices.Tasks
         {
         }
 
+
         public ApplicationSettings ReadSettings()
         {
             CheckFileExists();

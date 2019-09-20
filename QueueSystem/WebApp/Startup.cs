@@ -45,8 +45,6 @@ namespace WebApp
             });
 
             //adding SQLite to app
-            //services.AddEntityFrameworkSqlite().AddDbContext<ApplicationDbContext>();
-            //services.AddEntityFrameworkSqlite().AddDbContext<RepositoryContext>();
             services.ConfigureSqliteContext();
             services.ConfigureRepositoryWrapper();
 
@@ -101,7 +99,7 @@ namespace WebApp
                 
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
