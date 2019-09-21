@@ -42,7 +42,7 @@
                 <div class="col-3">
                     <br />
                     <label asp-for="Queue.RoomNo" class="form-check-inline">Nr gabinetu</label>
-                    <select asp-for="Queue.RoomNo" class="custom-select col-3" id="RoomSelection">
+                    <select asp-for="Queue.RoomNo" class="custom-select col-lg-3 col-sm-5" id="RoomSelection">
                         @foreach(var item in Model.AvailableRoomNo)
                         {
                             <option>@Html.DisplayFor(m => item)</option>
