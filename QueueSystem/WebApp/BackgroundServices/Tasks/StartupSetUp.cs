@@ -20,11 +20,9 @@ namespace WebApp.BackgroundServices.Tasks
         public override Task ProcessInScope(IServiceProvider serviceProvider)
         {
             SetAllQueuesInActive();
-<<<<<<< HEAD
+
             this.StopAsync(System.Threading.CancellationToken.None);
-=======
-            this.StopAsync(new CancellationToken());
->>>>>>> 16e271115eddaf32cfabc06f502893be9b21767c
+
             return Task.CompletedTask;
         }
 
