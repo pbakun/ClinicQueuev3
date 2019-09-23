@@ -24,9 +24,14 @@ namespace WebApp.Areas.Patient.Controllers
 
         public IActionResult Index()
         {
+<<<<<<< HEAD
 
             var bla = _repo.User.FindAll();
             var queue = _repo.Queue.FindAll();
+=======
+            //var bla = _repo.User.FindAll();
+            //var queue = _repo.Queue.FindAll();
+>>>>>>> 16e271115eddaf32cfabc06f502893be9b21767c
 
             var availableRooms = SettingsHandler.ApplicationSettings.AvailableRooms;
 
