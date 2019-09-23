@@ -36,8 +36,8 @@ connection.start().then(function(){
 });
 
 document.getElementById("PrevNo").addEventListener("click", function (event) {
-    queueNo--;
     if (queueNo > 0) {
+        queueNo--;
         connection.invoke("NewQueueNo", id, queueNo, roomNo).catch(function (err) {
             return console.error(err.toString());
         }); 

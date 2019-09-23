@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Repository;
+using Repository.Initialization;
 using WebApp.BackgroundServices.Tasks;
 using WebApp.Hubs;
 using WebApp.Mappings;
@@ -61,7 +62,7 @@ namespace WebApp
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<RepositoryContext>(); //would be best to add this in ServiceExtensions class in Repository library
 
-            
+            services.AddScoped<IDBInitializer, DBInitializer>();
             services.AddAutoMapper(typeof(MappingProfile));
             //all queues somehow needs to be set to inactive on app startup
             services.AddScoped<IQueueService, QueueService>();
@@ -69,7 +70,6 @@ namespace WebApp
             services.AddSingleton <Microsoft.Extensions.Hosting.IHostedService, StartupSetUp>();
 
             services.AddSingleton<SettingsHandler>();
-            SettingsHandler.Settings.ReadSettings();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -79,7 +79,7 @@ namespace WebApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IDBInitializer dbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -98,7 +98,8 @@ namespace WebApp
                 db.Database.EnsureCreated();
                 
             }
-
+            dbInitializer.Initialize();
+            SettingsHandler.Settings.ReadSettings();
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
