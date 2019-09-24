@@ -27,7 +27,7 @@ namespace WebApp.Models
                 }
                 else
                 {
-                    _queueNoMessage = "NZOZ";
+                    _queueNoMessage = "NZMR Modzelewska-Bakun";
                 }
 
                 return _queueNoMessage;
