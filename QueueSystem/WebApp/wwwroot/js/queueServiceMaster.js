@@ -36,10 +36,13 @@ connection.start().then(function(){
 });
 
 document.getElementById("PrevNo").addEventListener("click", function (event) {
-    queueNo--;
-    connection.invoke("NewQueueNo", id, queueNo, roomNo).catch(function (err) {
-        return console.error(err.toString());
-    });
+
+    if (queueNo > 0) {
+        queueNo--;
+        connection.invoke("NewQueueNo", id, queueNo, roomNo).catch(function (err) {
+            return console.error(err.toString());
+        }); 
+    }
     event.preventDefault();
 });
 
@@ -54,16 +57,18 @@ document.getElementById("NextNo").addEventListener("click", function (event) {
 document.getElementById("NewQueueNoSubmit").addEventListener("click", function (event) {
     var newNo = document.getElementById("NewQueueNoInputBox").value;
     ForceNewQueueNo(newNo);
+    document.getElementById("NewQueueNoInputBox").value = "";
+    event.preventDefault();
 });
 
 function ForceNewQueueNo(newNo) {
     newNo = parseInt(newNo);
-    queueNo = newNo;
-    connection.invoke("NewQueueNo", id, newNo, roomNo).catch(function (err) {
-        return console.error(err.toString());
-    });
-    document.getElementById("NewQueueNoInputBox").value = "";
-    event.preventDefault();
+    if (newNo > 0) {
+        queueNo = newNo;
+        connection.invoke("NewQueueNo", id, newNo, roomNo).catch(function (err) {
+            return console.error(err.toString());
+        });
+    }
 }
 
 //send -1 (sets break to true) to the server

@@ -14,6 +14,8 @@ namespace WebApp.Mappings
             CreateMap<Entities.Models.Queue, Queue>();
             CreateMap<Queue, Entities.Models.Queue>();
             CreateMap<Entities.Models.User, User>();
+
+            CreateMap<ApplicationSettings, ApplicationSettings>();
         }
     }
 }

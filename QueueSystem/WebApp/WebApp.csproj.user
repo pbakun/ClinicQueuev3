@@ -15,6 +15,8 @@
     <WebStackScaffolding_DbContextDialogWidth>600</WebStackScaffolding_DbContextDialogWidth>
     <WebStackScaffolding_UserClassDialogWidth>600</WebStackScaffolding_UserClassDialogWidth>
     <WebStackScaffolding_DependencyDialogWidth>600</WebStackScaffolding_DependencyDialogWidth>
+    <ShowAllFiles>false</ShowAllFiles>
+    <NameOfLastUsedPublishProfile>Default Settings</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>

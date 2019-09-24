@@ -24,6 +24,7 @@ namespace WebApp.Areas.Patient.Controllers
 
         public IActionResult Index()
         {
+
             var bla = _repo.User.FindAll();
             var queue = _repo.Queue.FindAll();
 

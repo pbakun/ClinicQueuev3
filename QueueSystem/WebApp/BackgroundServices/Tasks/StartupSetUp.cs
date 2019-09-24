@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using WebApp.ServiceLogic;
 
@@ -19,6 +20,9 @@ namespace WebApp.BackgroundServices.Tasks
         public override Task ProcessInScope(IServiceProvider serviceProvider)
         {
             SetAllQueuesInActive();
+
+            this.StopAsync(System.Threading.CancellationToken.None);
+
             return Task.CompletedTask;
         }
 
@@ -38,6 +42,11 @@ namespace WebApp.BackgroundServices.Tasks
             }
             
         }
+
+        //public override async Task StopAsync(CancellationToken cancellationToken)
+        //{
+
+        //}
 
         
     }

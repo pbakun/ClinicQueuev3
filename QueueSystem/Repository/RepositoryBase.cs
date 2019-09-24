@@ -22,9 +22,9 @@ namespace Repository
             return this.RepositoryContext.Set<T>().AsNoTracking();
         }
 
-        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
+        public List<T> FindByCondition(Expression<Func<T, bool>> expression)
         {
-            return this.RepositoryContext.Set<T>().Where(expression).AsNoTracking();
+            return this.RepositoryContext.Set<T>().Where(expression).AsNoTracking().ToList();
         }
 
         public void Add(T entity)

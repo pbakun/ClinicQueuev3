@@ -29,27 +29,27 @@
                 </div>
                 <div class="col-lg-4 col-sm-5">
                     <br />
-                    <a class="btn btn-dark text-light" id="PrevNo">Back</a>
+                    <a class="btn btn-dark text-light" id="PrevNo"><i class="fas fa-user-minus"></i></a>
 
-                    <a class="btn btn-dark text-light" id="NextNo">Next</a>
+                    <a class="btn btn-dark text-light" id="NextNo"><i class="fas fa-user-plus"></i></a>
 
-                    <a class="btn btn-info" id="Break">Break</a>
+                    <a class="btn btn-info text-light" id="Break">Przerwa</a>
 
-                    <a class="btn btn-info" id="Special">Special No</a>
+                    <a class="btn btn-info text-light" id="Special">Specjalny nr</a>
 
                 </div>
 
                 <div class="col-3">
                     <br />
                     <label asp-for="Queue.RoomNo" class="form-check-inline">Nr gabinetu</label>
-                    <select asp-for="Queue.RoomNo" class="custom-select col-3" id="RoomSelection">
+                    <select asp-for="Queue.RoomNo" class="custom-select col-lg-3 col-sm-5" id="RoomSelection">
                         @foreach(var item in Model.AvailableRoomNo)
                         {
                             <option>@Html.DisplayFor(m => item)</option>
                         }
                         
                     </select>
-                    <button type="submit" asp-action="NewRoomNo" class="btn btn-info text-dark">Zmień</button>
+                    <button type="submit" asp-action="NewRoomNo" class="btn btn-info text-light">Zmień</button>
                     <span asp-validation-for="Queue.RoomNo" class="text-danger"></span>
                 </div>
 
@@ -64,7 +64,7 @@
                 </div>
                 <div class="col-lg-1 col-sm-2">
                     <br />
-                    <a class="btn btn-success" style="margin: 5px;" id="NewQueueNoSubmit">New</a>
+                    <a class="btn btn-success text-light" style="margin: 5px;" id="NewQueueNoSubmit">New</a>
                 </div>
             </div>
             <br />
@@ -81,7 +81,7 @@
                         <br />
                         <a class="btn btn-dark text-light" style="margin: 5px;" id="SendAdditionalMessage">Wyślij</a>
 
-                        <a class="btn btn-info" style="margin: 5px;" id="ClearAdditionalMessage">Wyczyść</a>
+                        <a class="btn btn-info text-light" style="margin: 5px;" id="ClearAdditionalMessage">Wyczyść</a>
                     </div>
                 </div>
 

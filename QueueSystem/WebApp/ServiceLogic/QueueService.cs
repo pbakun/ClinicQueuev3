@@ -169,9 +169,12 @@ namespace WebApp.ServiceLogic
             {
                 var repo = scope.ServiceProvider.GetRequiredService<IRepositoryWrapper>();
                 var queue = repo.Queue.FindByCondition(q => q.UserId == userId).FirstOrDefault();
-                queue.IsActive = false;
-                repo.Queue.Update(queue);
-                repo.Save();
+                if (queue != null)
+                {
+                    queue.IsActive = false;
+                    repo.Queue.Update(queue);
+                    repo.Save();
+                }
             }
         }
 
