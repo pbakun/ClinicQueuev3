@@ -38,14 +38,26 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Submit(ApplicationSettings settings)
         {
+            bool somethingChanged = false;
             if(settings.PatientViewNotificationAfterDoctorDisconnectedDelay < 1000)
             {
                 SettingsHandler.ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay = ToMiliseconds(settings.PatientViewNotificationAfterDoctorDisconnectedDelay);
-                SettingsHandler.Settings.WriteSettingsExceptRooms(SettingsHandler.ApplicationSettings);
-                ApplicationSettings = _mapper.Map<ApplicationSettings>(SettingsHandler.ApplicationSettings);
-                ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay = FromMiliseconds(ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay);
-
+                somethingChanged = true;
+                
             }
+            if (!settings.MessageWhenNoDoctorActiveInQueue.Equals(string.Empty))
+            {
+                SettingsHandler.ApplicationSettings.MessageWhenNoDoctorActiveInQueue = settings.MessageWhenNoDoctorActiveInQueue;
+                somethingChanged = true;
+            }
+
+            if (somethingChanged)
+            {
+                SettingsHandler.Settings.WriteSettingsExceptRooms(SettingsHandler.ApplicationSettings);
+            }
+
+            ApplicationSettings = _mapper.Map<ApplicationSettings>(SettingsHandler.ApplicationSettings);
+            ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay = FromMiliseconds(ApplicationSettings.PatientViewNotificationAfterDoctorDisconnectedDelay);
 
             return View("Index", ApplicationSettings);
         }

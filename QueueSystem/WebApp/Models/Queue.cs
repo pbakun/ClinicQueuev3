@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.BackgroundServices.Tasks;
 
 namespace WebApp.Models
 {
@@ -27,7 +28,7 @@ namespace WebApp.Models
                 }
                 else
                 {
-                    _queueNoMessage = "NZMR Modzelewska-Bakun";
+                    _queueNoMessage = SettingsHandler.ApplicationSettings.MessageWhenNoDoctorActiveInQueue;
                 }
 
                 return _queueNoMessage;

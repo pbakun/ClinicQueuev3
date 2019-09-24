@@ -37,5 +37,7 @@ namespace WebApp.Models
             }
         }
 
+        public string MessageWhenNoDoctorActiveInQueue { get; set; }
+
     }
 }

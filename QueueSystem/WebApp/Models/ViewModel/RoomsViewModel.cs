@@ -10,5 +10,6 @@ namespace WebApp.Models.ViewModel
         public Queue Queue { get; set; }
         public int RoomNo { get; set; }
         public string UserName { get; set; }
+        public int QuantityOfAssignedUsers { get; set; }
     }
 }

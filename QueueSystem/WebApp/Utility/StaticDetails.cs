@@ -24,6 +24,8 @@ namespace WebApp.Utility
 
         public const string QueueOccupiedMessage = "Kolejka w wybranym pokoju jest obecnie pod kontrolą innego użytkownika";
 
+        public const string MessageWhenNoDoctorActiveInQueue = "NZMR Modzelewska-Bakun";
+
         //public static readonly List<int> AvailableRoomNo = new List<int> { 12, 13, 14 };
     }
 }

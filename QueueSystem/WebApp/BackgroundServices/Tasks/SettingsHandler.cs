@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApp.Models;
+using WebApp.Utility;
 
 namespace WebApp.BackgroundServices.Tasks
 {
@@ -80,7 +81,9 @@ namespace WebApp.BackgroundServices.Tasks
                 WriteAllSettings(new ApplicationSettings()
                 {
                     AvailableRooms = new List<int>(),
-                    QueueOccupiedMessage = string.Empty
+                    QueueOccupiedMessage = string.Empty,
+                    PatientViewNotificationAfterDoctorDisconnectedDelay = 60000,
+                    MessageWhenNoDoctorActiveInQueue = StaticDetails.MessageWhenNoDoctorActiveInQueue
                 });
             }
         }
