@@ -8,6 +8,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace WebApp
 {
@@ -15,14 +16,26 @@ namespace WebApp
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            var log = new LoggerConfiguration()
+                .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
+                .WriteTo.Console(restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information)
+                .CreateLogger();
+
+            try
+            {
+                CreateWebHostBuilder(args).Build().Run();
+            }
+            finally
+            {
+                log.Dispose();
+            }
 
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-            //.UseKestrel()
-            .UseUrls("https://*:5001", "http://*:5000")
+                .UseUrls("https://*:5001", "http://*:5000")
                 .UseStartup<Startup>();
+                //.UseSerilog();
     }
 }

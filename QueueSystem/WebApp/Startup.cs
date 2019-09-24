@@ -14,8 +14,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Repository;
 using Repository.Initialization;
+using Serilog;
 using WebApp.BackgroundServices.Tasks;
 using WebApp.Hubs;
 using WebApp.Mappings;
@@ -29,6 +31,9 @@ namespace WebApp
         {
             Configuration = configuration;
 
+            //var logConfig = new Serilog.LoggerConfiguration()
+            //    .ReadFrom.Configuration(configuration)
+            //    .CreateLogger();
             
         }
 
@@ -79,7 +84,7 @@ namespace WebApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IDBInitializer dbInitializer)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IDBInitializer dbInitializer, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -100,6 +105,9 @@ namespace WebApp
             }
             dbInitializer.Initialize();
             SettingsHandler.Settings.ReadSettings();
+
+            //loggerFactory.AddSerilog();
+
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

@@ -5,7 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Repository.Interfaces;
+using Serilog;
 using WebApp.BackgroundServices.Tasks;
 using WebApp.Models;
 
@@ -16,15 +18,17 @@ namespace WebApp.Areas.Patient.Controllers
     {
 
         private readonly IRepositoryWrapper _repo;
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IRepositoryWrapper repo)
+        public HomeController(IRepositoryWrapper repo, ILogger<HomeController> logger)
         {
             _repo = repo;
+            _logger = logger;
         }
 
         public IActionResult Index()
         {
-
+            _logger.LogTrace("Home Controller entered");
             var bla = _repo.User.FindAll();
             var queue = _repo.Queue.FindAll();
 
