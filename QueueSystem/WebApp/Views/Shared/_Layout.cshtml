@@ -41,19 +41,19 @@
                         @if (User.IsInRole(StaticDetails.AdminUser) || User.IsInRole(StaticDetails.DoctorUser))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Doctor" asp-controller="Doctor" asp-action="Index">Doctor</a>
+                                <a class="nav-link text-dark" asp-area="Doctor" asp-controller="Doctor" asp-action="Index">Lekarz</a>
                             </li>
                         }
                         @if (User.IsInRole(StaticDetails.AdminUser))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="Index">Users</a>
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="Index">Użytkownicy</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Rooms" asp-action="Index">Rooms</a>
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Rooms" asp-action="Index">Gabinety</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Settings" asp-action="Index">Settings</a>
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Settings" asp-action="Index">Ustawienia</a>
                             </li>
                         }
 

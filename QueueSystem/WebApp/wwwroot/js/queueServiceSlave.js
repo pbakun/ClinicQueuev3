@@ -7,7 +7,8 @@ var pathElements = window.location.pathname.split('/');
 var roomNo = pathElements[pathElements.length - 1];
 
 connection.on("ReceiveQueueNo", function (user, message) {
-    document.getElementById("QueueNo").textContent = message;
+    DistributeQueueMessage(message);
+    //document.getElementById("QueueNo").textContent = message;
 });
 
 connection.on("ReceiveAdditionalInfo", function (id, message) {
@@ -37,3 +38,18 @@ connection.start().then(function () {
 }).catch(function (err) {
     return console.error(err.toString());
 });
+
+
+function DistributeQueueMessage(message) {
+    var mainField = document.getElementById("QueueNo");
+    var secondField = document.getElementById("QueueMessageExtension");
+    if (message.search("NZMR") === 0) {
+        var firstPart = queueMessage.split(" ")[0];
+        mainField.textContent = firstPart;
+        secondField.textContent = queueMessage.substring(firstPart.length, queueMessage.length);
+    }
+    else {
+        mainField.textContent = message;
+        secondField.textContent = "";
+    }
+}

@@ -39,7 +39,8 @@ namespace WebApp.Areas.Admin.Controllers
             RoomsViewModel roomVMElement = new RoomsViewModel();
             foreach (var room in availableRooms)
             {
-                var queue = queues.Where(q => q.RoomNo == room).FirstOrDefault();
+                int usersQuantity = queues.Where(q => q.RoomNo == room).ToList().Count();
+                var queue = queues.Where(q => q.RoomNo == room).OrderByDescending(t => t.Timestamp).FirstOrDefault();
                 if (queue != null)
                 {
                     var user = _repo.User.FindByCondition(u => u.Id == queue.UserId).FirstOrDefault();
@@ -47,6 +48,7 @@ namespace WebApp.Areas.Admin.Controllers
                     roomVMElement.Queue = queue;
                     roomVMElement.RoomNo = room;
                     roomVMElement.UserName = user.UserName;
+                    roomVMElement.QuantityOfAssignedUsers = usersQuantity;
                 }
                 else
                 {
