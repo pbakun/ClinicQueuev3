@@ -31,6 +31,7 @@ namespace WebApp.Hubs
             _queueService = queueService;
             _hubContext = hubContext;
         }
+
         public async Task RegisterDoctor(string userId, int roomNo)
         {
             var newUser = new HubUser {
@@ -39,10 +40,11 @@ namespace WebApp.Hubs
                 GroupName = roomNo.ToString()
             };
 
+            //add something to add connecting user if this is the same as already registered but with different connectiondID
             var userInControl = _connectedUsers.Where(m => m.Id != null && m.GroupName == newUser.GroupName).FirstOrDefault();
             if(userInControl == null)
             {
-                await Groups.AddToGroupAsync(newUser.ConnectionId, newUser.GroupName);
+                await Groups.AddToGroupAsync(newUser.ConnectionId, newUser.GroupName).ConfigureAwait(false);
 
                 var user = _repo.User.FindByCondition(u => u.Id == userId).FirstOrDefault();
 
@@ -70,7 +72,7 @@ namespace WebApp.Hubs
         }
 
         public async Task RegisterPatientView(int roomNo)
-        {   
+        {
             var newUser = new HubUser
             {
                 ConnectionId = Context.ConnectionId,

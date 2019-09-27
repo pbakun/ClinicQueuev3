@@ -35,9 +35,7 @@ namespace WebApp.ServiceLogic
             _repo.Queue.Update(queue);
             _repo.Save();
 
-            var output = _mapper.Map<Queue>(queue);
-
-            return output;
+            return _mapper.Map<Queue>(queue);
         }
 
         public Queue FindByRoomNo(int roomNo)
@@ -45,9 +43,7 @@ namespace WebApp.ServiceLogic
             //returns queue with newest Timestamp
             var queue = _repo.Queue.FindByCondition(r => r.RoomNo == roomNo && r.IsActive).OrderByDescending(t => t.Timestamp).FirstOrDefault();
 
-            Queue output = _mapper.Map<Queue>(queue);
-
-            return output;
+            return _mapper.Map<Queue>(queue);
         }
 
         public Queue FindByUserId(string userId)
@@ -79,9 +75,7 @@ namespace WebApp.ServiceLogic
             _repo.Queue.Update(queue);
             await _repo.SaveAsync();
 
-            Queue outputQueue = _mapper.Map<Queue>(queue);
-
-            return outputQueue;
+            return _mapper.Map<Queue>(queue);
         }
 
         public async Task<Queue> NewQueueNo(string userId, int queueNo)
@@ -95,11 +89,11 @@ namespace WebApp.ServiceLogic
                 queue.IsBreak = false;
                 queue.IsSpecial = false;
             }
-            else if (queueNo == -1 && queue.IsBreak == false)
+            else if (queueNo == -1 && !queue.IsBreak)
             {
                 queue.IsBreak = true;
             }
-            else if (queueNo == -2 && queue.IsSpecial == false)
+            else if (queueNo == -2 && !queue.IsSpecial)
             {
                 queue.IsSpecial = true;
             }
@@ -113,14 +107,12 @@ namespace WebApp.ServiceLogic
             _repo.Queue.Update(queue);
             await _repo.SaveAsync();
 
-            Queue outputQueue = _mapper.Map<Queue>(queue);
-
-            return outputQueue;
+            return _mapper.Map<Queue>(queue);
         }
 
         public Queue ResetQueues()
         {
-            throw new NotImplementedException();
+            return new Queue();
         }
 
         public Queue CreateQueue(string userId)
@@ -182,8 +174,7 @@ namespace WebApp.ServiceLogic
         {
             var queues = _repo.Queue.FindAll().ToList();
 
-            var output = _mapper.Map<List<Queue>>(queues);
-            return output;
+            return _mapper.Map<List<Queue>>(queues);
         }
 
 
