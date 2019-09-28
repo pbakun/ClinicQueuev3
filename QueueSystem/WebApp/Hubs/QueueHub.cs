@@ -14,8 +14,8 @@ namespace WebApp.Hubs
 {
     public class QueueHub : Hub
     {
-        private static List<HubUser> _connectedUsers = new List<HubUser>();
-        private static List<HubUser> _waitingUsers = new List<HubUser>();
+        public static List<HubUser> _connectedUsers = new List<HubUser>();
+        public static List<HubUser> _waitingUsers = new List<HubUser>();
 
         private readonly IRepositoryWrapper _repo;
         private readonly IQueueService _queueService;
@@ -30,6 +30,7 @@ namespace WebApp.Hubs
             _repo = repo;
             _queueService = queueService;
             _hubContext = hubContext;
+
         }
 
         public async Task RegisterDoctor(string userId, int roomNo)

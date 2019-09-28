@@ -23,9 +23,5 @@ namespace XUnitTests
             TestCliet = appFactory.CreateClient();
         }
 
-        protected async Task AuthenticateAsync()
-        {
-
-        }
     }
 }
