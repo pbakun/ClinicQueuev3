@@ -154,7 +154,7 @@ namespace XUnitTests
             }
 
             mockClients.Verify(c => c.Group(roomNo.ToString()), Times.AtLeastOnce);
-
+            
             mockClientProxy.Verify(p => p.SendCoreAsync("NotifyQueueOccupied",
                 It.Is<object[]>(o => o != null && o.Length == 1),
                 default(CancellationToken)), Times.Exactly(numberOfCalls - 1));
@@ -176,8 +176,9 @@ namespace XUnitTests
             var prepareQueue = new QueueData().WithRoomNo(roomNo).WithQueueNo(15).WithOwnerInitials("PB").Build();
             var preparedQueue = _mapper.Map<Queue>(prepareQueue);
             
-            var queue = await CallRegisterDoctor(id, roomNo, mockClients, mockClientProxy, mockGroupManager);
+            QueueHub._connectedUsers.Add(PrepareHubUser(id, roomNo.ToString()));
 
+            mockClients.Setup(c => c.Group(preparedQueue.RoomNo.ToString())).Returns(() => mockClientProxy.Object);
             _mockQueueService.Setup(q => q.NewQueueNo(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult(preparedQueue));
 
             var hub = new QueueHub(_mockRepo.Object, _mockQueueService.Object, _mockHubContext.Object)
@@ -187,13 +188,55 @@ namespace XUnitTests
                 Groups = mockGroupManager.Object
             };
             //System.Diagnostics.Debugger.Launch();
-            await hub.NewQueueNo("1", preparedQueue.QueueNo, roomNo);
+            await hub.NewQueueNo(id, preparedQueue.QueueNo, roomNo);
 
-            _mockClientProxy.Verify(p => p.SendCoreAsync("ReceiveQueueNo",
+            mockClientProxy.Verify(p => p.SendCoreAsync("ReceiveQueueNo",
                 It.Is<object[]>(o => o != null && o.Length == 2 && ((string)o[1]) == preparedQueue.QueueNoMessage),
                 default(CancellationToken)), Times.AtLeastOnce);
 
             QueueHub._connectedUsers.Clear();
+        }
+
+        [Theory]
+        [InlineData("1", 12, "bla bla bla")]
+        [InlineData("2", 12, "")]
+        public async Task NewAdditionalInfoTest(string id, int roomNo, string message)
+        {
+            var mockClientProxy = new Mock<Microsoft.AspNetCore.SignalR.IClientProxy>();
+            var mockClients = new Mock<IHubCallerClients>();
+            var mockGroupManager = new Mock<IGroupManager>();
+
+            var prepareQueue = new QueueData().WithRoomNo(roomNo).WithMessage(message).WithOwnerInitials("PB").Build();
+            var preparedQueue = _mapper.Map<Queue>(prepareQueue);
+
+            QueueHub._connectedUsers.Add(PrepareHubUser(id, roomNo.ToString()));
+
+            mockClients.Setup(c => c.Group(preparedQueue.RoomNo.ToString())).Returns(() => mockClientProxy.Object);
+            _mockQueueService.Setup(q => q.NewAdditionalInfo(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(preparedQueue));
+
+            var hub = new QueueHub(_mockRepo.Object, _mockQueueService.Object, _mockHubContext.Object)
+            {
+                Clients = mockClients.Object,
+                Context = _mockHubCallerContext.Object,
+                Groups = mockGroupManager.Object
+            };
+            //System.Diagnostics.Debugger.Launch();
+            await hub.NewAdditionalInfo(id, roomNo, preparedQueue.AdditionalMessage);
+
+            mockClientProxy.Verify(p => p.SendCoreAsync("ReceiveAdditionalInfo",
+                It.Is<object[]>(o => o != null && o.Length == 2 && ((string)o[1]) == preparedQueue.AdditionalMessage),
+                default(CancellationToken)), Times.AtLeastOnce);
+
+            QueueHub._connectedUsers.Clear();
+        }
+
+        private HubUser PrepareHubUser(string id, string roomNo)
+        {
+            return new HubUser()
+            {
+                Id = id,
+                GroupName = roomNo
+            };
         }
     }
 }
