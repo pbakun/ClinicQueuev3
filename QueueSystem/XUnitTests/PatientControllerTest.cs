@@ -27,7 +27,7 @@ namespace XUnitTests
         //[InlineData("/Admin/Rooms/Index")]
         public async Task ResponseTest(string url)
         {
-            System.Diagnostics.Debugger.Launch();
+            //System.Diagnostics.Debugger.Launch();
             var client = _factory.CreateClient();
 
             var response = await client.GetAsync(url);

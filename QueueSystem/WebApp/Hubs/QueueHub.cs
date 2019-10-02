@@ -104,7 +104,7 @@ namespace WebApp.Hubs
             //if group member changed roomNo reload patient view
             if (groupMember.Id != null && !_queueService.CheckRoomSubordination(groupMember.Id, memberRoomNo))
             {
-                _queueService.SetQueueInActive(groupMember.Id);
+                _queueService.SetQueueInactive(groupMember.Id);
                 Clients.Group(groupMember.GroupName).SendAsync("Refresh", groupMember.GroupName);
             }
             else if (groupMember.Id != null)
@@ -120,12 +120,12 @@ namespace WebApp.Hubs
             return base.OnDisconnectedAsync(exception);
         }
 
-        public void Timer_TimerFinished(object sender, EventArgs e)
+        private void Timer_TimerFinished(object sender, EventArgs e)
         {
             var groupMember = sender as HubUser;
             if (_connectedUsers.Where(i => i.Id == groupMember.Id).FirstOrDefault() == null)
             {
-                _queueService.SetQueueInActive(groupMember.Id);
+                _queueService.SetQueueInactive(groupMember.Id);
                 _hubContext.Clients.Group(groupMember.GroupName).SendAsync("Refresh", groupMember.GroupName);
             }
             _timer.Dispose();

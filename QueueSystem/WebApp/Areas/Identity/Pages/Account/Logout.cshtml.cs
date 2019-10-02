@@ -35,7 +35,7 @@ namespace WebApp.Areas.Identity.Pages.Account
             var claimIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-            _queueService.SetQueueInActive(claim.Value);
+            _queueService.SetQueueInactive(claim.Value);
 
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");

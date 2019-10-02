@@ -36,7 +36,7 @@ namespace WebApp.BackgroundServices.Tasks
 
                 foreach (var queue in queues)
                 {
-                    service.SetQueueInActive(queue.UserId);
+                    service.SetQueueInactive(queue.UserId);
                 }
 
             }

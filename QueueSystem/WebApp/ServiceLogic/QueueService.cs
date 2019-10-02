@@ -155,7 +155,7 @@ namespace WebApp.ServiceLogic
 
         }
 
-        public void SetQueueInActive(string userId)
+        public void SetQueueInactive(string userId)
         {
             using (var scope = _scopeFactory.CreateScope())
             {

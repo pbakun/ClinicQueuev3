@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\_Kod\\ClinicQueuev3\\QueueSystem\\WebApp\\WebApp.csproj": {}
+    "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj": {}
   },
   "projects": {
-    "C:\\_Kod\\ClinicQueuev3\\QueueSystem\\Entities\\Entities.csproj": {
+    "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\_Kod\\ClinicQueuev3\\QueueSystem\\Entities\\Entities.csproj",
+        "projectUniqueName": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj",
         "projectName": "Entities",
-        "projectPath": "C:\\_Kod\\ClinicQueuev3\\QueueSystem\\Entities\\Entities.csproj",
-        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "C:\\_Kod\\ClinicQueuev3\\QueueSystem\\Entities\\obj\\",
+        "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj",
+        "packagesPath": "C:\\Users\\pbakun\\.nuget\\packages\\",
+        "outputPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pbakun\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -63,34 +63,28 @@
             }
           },
           "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
+            "net461"
           ],
           "assetTargetFallback": true,
-          "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+          "warn": true
         }
       }
     },
-    "C:\\_Kod\\ClinicQueuev3\\QueueSystem\\Repository\\Repository.csproj": {
+    "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\_Kod\\ClinicQueuev3\\QueueSystem\\Repository\\Repository.csproj",
+        "projectUniqueName": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj",
         "projectName": "Repository",
-        "projectPath": "C:\\_Kod\\ClinicQueuev3\\QueueSystem\\Repository\\Repository.csproj",
-        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "C:\\_Kod\\ClinicQueuev3\\QueueSystem\\Repository\\obj\\",
+        "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj",
+        "packagesPath": "C:\\Users\\pbakun\\.nuget\\packages\\",
+        "outputPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pbakun\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -104,8 +98,8 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "C:\\_Kod\\ClinicQueuev3\\QueueSystem\\Entities\\Entities.csproj": {
-                "projectPath": "C:\\_Kod\\ClinicQueuev3\\QueueSystem\\Entities\\Entities.csproj"
+              "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj": {
+                "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj"
               }
             }
           }
@@ -131,34 +125,28 @@
             }
           },
           "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
+            "net461"
           ],
           "assetTargetFallback": true,
-          "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+          "warn": true
         }
       }
     },
-    "C:\\_Kod\\ClinicQueuev3\\QueueSystem\\WebApp\\WebApp.csproj": {
+    "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\_Kod\\ClinicQueuev3\\QueueSystem\\WebApp\\WebApp.csproj",
+        "projectUniqueName": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
         "projectName": "WebApp",
-        "projectPath": "C:\\_Kod\\ClinicQueuev3\\QueueSystem\\WebApp\\WebApp.csproj",
-        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "C:\\_Kod\\ClinicQueuev3\\QueueSystem\\WebApp\\obj\\",
+        "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
+        "packagesPath": "C:\\Users\\pbakun\\.nuget\\packages\\",
+        "outputPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pbakun\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -172,8 +160,8 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "C:\\_Kod\\ClinicQueuev3\\QueueSystem\\Repository\\Repository.csproj": {
-                "projectPath": "C:\\_Kod\\ClinicQueuev3\\QueueSystem\\Repository\\Repository.csproj"
+              "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj": {
+                "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj"
               }
             }
           }
@@ -226,16 +214,10 @@
             }
           },
           "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
+            "net461"
           ],
           "assetTargetFallback": true,
-          "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+          "warn": true
         }
       }
     }

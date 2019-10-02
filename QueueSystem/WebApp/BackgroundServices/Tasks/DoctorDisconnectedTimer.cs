@@ -9,7 +9,7 @@ namespace WebApp.Hubs
 {
     public class DoctorDisconnectedTimer : IDisposable
     {
-        public System.Timers.Timer _timer;
+        private readonly System.Timers.Timer _timer;
         public event EventHandler TimerFinished;
         private HubUser _groupMember;
         

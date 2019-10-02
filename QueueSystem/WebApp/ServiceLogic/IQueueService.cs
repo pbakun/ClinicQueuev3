@@ -18,6 +18,6 @@ namespace WebApp.ServiceLogic
         Queue CreateQueue(string userId);
         bool CheckRoomSubordination(string userId, int roomNo);
         void SetQueueActive(Entities.Models.Queue queueId);
-        void SetQueueInActive(string userId);
+        void SetQueueInactive(string userId);
     }
 }
