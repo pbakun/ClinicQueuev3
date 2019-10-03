@@ -49,10 +49,12 @@ function DistributeQueueMessage(message) {
         mainField.textContent = firstPart;
         secondField.textContent = queueMessage.substring(firstPart.length, queueMessage.length);
         headerField.hidden = true;
+        mainField.style.paddingTop = "0.4em";
     }
     else {
         mainField.textContent = message;
         secondField.textContent = "";
-        headerField.hidden = false
+        headerField.hidden = false;
+        mainField.style.paddingTop = "0";
     }
 }
