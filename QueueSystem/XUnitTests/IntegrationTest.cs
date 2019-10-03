@@ -11,7 +11,7 @@ namespace XUnitTests
 {
     public class IntegrationTest
     {
-        protected readonly HttpClient TestCliet;
+        protected readonly HttpClient TestClient;
 
         protected IntegrationTest()
         {
@@ -20,7 +20,7 @@ namespace XUnitTests
                 {
                     
                 });
-            TestCliet = appFactory.CreateClient();
+            TestClient = appFactory.CreateClient();
         }
 
         protected async Task AuthenticateAsync()

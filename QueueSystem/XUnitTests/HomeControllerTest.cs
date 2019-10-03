@@ -19,5 +19,11 @@ namespace XUnitTests
 
             //Assert
         }
+
+        [Fact]
+        public async Task Get_PageRegirectionWithoutCredentials()
+        {
+            
+        }
     }
 }
