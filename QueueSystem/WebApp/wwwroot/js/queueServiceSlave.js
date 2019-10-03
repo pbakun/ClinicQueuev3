@@ -43,13 +43,16 @@ connection.start().then(function () {
 function DistributeQueueMessage(message) {
     var mainField = document.getElementById("QueueNo");
     var secondField = document.getElementById("QueueMessageExtension");
+    var headerField = document.getElementById("DoctorFullName");
     if (message.search("NZMR") === 0) {
         var firstPart = queueMessage.split(" ")[0];
         mainField.textContent = firstPart;
         secondField.textContent = queueMessage.substring(firstPart.length, queueMessage.length);
+        headerField.hidden = true;
     }
     else {
         mainField.textContent = message;
         secondField.textContent = "";
+        headerField.hidden = false
     }
 }

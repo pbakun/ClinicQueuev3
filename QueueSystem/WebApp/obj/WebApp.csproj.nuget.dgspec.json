@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj": {}
+    "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj": {}
   },
   "projects": {
-    "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj": {
+    "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj",
+        "projectUniqueName": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj",
         "projectName": "Entities",
-        "projectPath": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj",
+        "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj",
         "packagesPath": "C:\\Users\\pbakun\\.nuget\\packages\\",
-        "outputPath": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\obj\\",
+        "outputPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -70,14 +70,14 @@
         }
       }
     },
-    "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj": {
+    "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj",
+        "projectUniqueName": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj",
         "projectName": "Repository",
-        "projectPath": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj",
+        "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj",
         "packagesPath": "C:\\Users\\pbakun\\.nuget\\packages\\",
-        "outputPath": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\obj\\",
+        "outputPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -98,8 +98,8 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj": {
-                "projectPath": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj"
+              "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj": {
+                "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Entities\\Entities.csproj"
               }
             }
           }
@@ -132,14 +132,14 @@
         }
       }
     },
-    "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj": {
+    "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
+        "projectUniqueName": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
         "projectName": "WebApp",
-        "projectPath": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
+        "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\WebApp.csproj",
         "packagesPath": "C:\\Users\\pbakun\\.nuget\\packages\\",
-        "outputPath": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\obj\\",
+        "outputPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\WebApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -160,8 +160,8 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj": {
-                "projectPath": "c:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj"
+              "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj": {
+                "projectPath": "C:\\_Moje\\C#\\Clinicv3\\QueueSystem\\Repository\\Repository.csproj"
               }
             }
           }

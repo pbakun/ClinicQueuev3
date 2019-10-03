@@ -20,17 +20,18 @@
 }
 
 #DoctorFullName {
-    font-size: 70px;
-    padding-top: 13%;
+    font-size: 4vw;
+    padding-top: 11%;
+    line-height: 1.0;
 }
 
 #QueueNo {
-    font-size: 350px;
+    font-size: 20vw;
     line-height: 1.2;
 }
 
 #QueueMessageExtension{
-    font-size: 100px;
+    font-size: 5em;
     font-weight: 500;
 }
 
